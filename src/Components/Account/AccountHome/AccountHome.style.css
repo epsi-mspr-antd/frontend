@@ -1,0 +1,7 @@
+.box {
+    border-radius: 1rem;
+    border-color: var(--main);
+    border-width: 2px;
+    background-color: var(--main-dark);
+    color: var(--text-white);
+}
