@@ -21,7 +21,7 @@ export const BentoGeneric: React.FC<Bento3> = (
             <div className='header flex items-center '>
                 {childHeader ? childHeader : ''}
             </div>
-            <div className={svgClass + "w-full max-h-scr basis-9/12 flex p-2"}>
+            <div className={svgClass + "w-full overflow-y-auto basis-9/12 flex p-2"}>
                 <main className="w-full overflow-hidden p-2">
                     {childMain ? childMain : "" }
                 </main>
