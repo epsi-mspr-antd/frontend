@@ -10,6 +10,7 @@ import { Plants } from './Components/Account/AccountPlant/Plant.component.tsx';
 import { Error404 } from './Components/404/404.component.tsx';
 import { MapPage } from './Components/Map/mapPage.component.tsx';
 import { Register } from './Components/Register/register.component.tsx';
+import { AccountHome } from './Components/Account/AccountHome/AccountHome.component.tsx';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path:"/map",
     element: <MapPage/>
+  },
+  {
+    path:"/account",
+    element: <AccountHome/>
   },
   {
     path:"/account/settings",
