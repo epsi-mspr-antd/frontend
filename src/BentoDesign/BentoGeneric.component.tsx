@@ -17,10 +17,11 @@ export const BentoGeneric: React.FC<Bento3> = (
 
     return (
         <>
+        <div className='w-full h-screen flex flex-col justify-between'>
             <div className='header flex items-center '>
                 {childHeader ? childHeader : ''}
             </div>
-            <div className={svgClass + "w-full max-h-[75%] basis-9/12 flex p-2"}>
+            <div className={svgClass + "w-full max-h-scr basis-9/12 flex p-2"}>
                 <main className="w-full overflow-hidden p-2">
                     {childMain ? childMain : "" }
                 </main>
@@ -36,6 +37,7 @@ export const BentoGeneric: React.FC<Bento3> = (
 
             </div>
             {isBurgerMenu ? <BurgerMenu /> : ''}
+            </div>
         </>
     )
 }
