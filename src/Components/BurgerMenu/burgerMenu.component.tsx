@@ -31,8 +31,8 @@ export function BurgerMenu() {
 
             {isOpened ?
                 <>
-                    <button onClick={handleClick} className="absolute z-0 top-0 left-0 w-full h-full blur-xl bg-gray-500 opacity-50">
-                    </button>
+                    <div onClick={handleClick} className="absolute z-0 top-0 left-0 w-full h-full blur-xl bg-gray-500 opacity-50">
+                    </div>
                     <div>
                         <NavigationMenu isOpened={isOpened} setIsOpened={setIsOpened} />
                     </div>
