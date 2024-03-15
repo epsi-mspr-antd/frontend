@@ -15,14 +15,12 @@ import { Header } from './Components/Header/header.component';
 function App() {
   return (
     <>
-      <div className='w-full h-screen flex flex-col'>
         <BentoGeneric 
         childHeader={<Header/>} 
         childMain={<HomeMainContent/>} 
         childRight={<HomeRightContent/>} 
         isBurgerMenu={true}
         isSVGRequired={true} />
-      </div>
     </>
   )
 }
