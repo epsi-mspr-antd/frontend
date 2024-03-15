@@ -1,0 +1,16 @@
+:root {
+    --btn-primary-bg: #5d7456;
+    --btn-primary-border: #576c51;
+    --btn-primary-bg-hover: #556a4f;
+    --btn-primary-border-hover: #4c5e46;
+
+    --btn-active-bg: #72bc24;
+    --btn-active-border: #65a81e;
+    --btn-active-bg-hover: #65a620;
+    --btn-active-border-hover: #5a961b;
+    
+    --btn-secondary-bg: #4b4335;
+    --btn-secondary-border: #3d362b;
+    --btn-secondary-bg-hover: #3d362a;
+    --btn-secondary-border-hover: #2f2a21;
+}

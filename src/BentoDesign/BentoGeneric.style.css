@@ -1,0 +1,11 @@
+.mainContentBox {
+    background-image: url(./../../../Ressources/SVG/freeArt_tree.svg);
+    background-size: cover;
+    color: var(--text-white);
+    opacity: 0.5;
+    }
+
+.header {
+        border-color: black;
+        border-width: 0 0 1px 0;
+     }

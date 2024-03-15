@@ -1,0 +1,21 @@
+.pictureContainer {
+    border-width: 0 0 1px 0;
+    border-color: var(--inactive);
+    padding-bottom: 5px;
+    width: 40px;
+}
+
+.pictureContainer:hover {
+    border-color: var(--hover);
+}
+
+.pictureContainerActive {
+    border-width: 0 0 1px 0;
+    border-color: var(--active);
+    padding-bottom: 5px;
+    width: 40px;
+}
+
+header {
+    background-color: var(--morning);
+}

@@ -1,0 +1,6 @@
+.people {
+    background-image: url(./../../../Ressources/SVG/peoples.svg);
+    background-size: cover;
+    height: 100px;
+    width: 48px;
+}

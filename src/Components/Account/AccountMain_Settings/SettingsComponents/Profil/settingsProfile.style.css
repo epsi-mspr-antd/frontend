@@ -1,0 +1,10 @@
+.imgProfil {
+    width: 12rem;
+    border-radius: 12rem;
+}
+
+input:disabled {
+    background-color: inherit;
+    
+    opacity: 1;
+  }

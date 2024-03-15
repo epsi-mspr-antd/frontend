@@ -1,0 +1,6 @@
+.mainContainer {
+    border-radius: 2rem;
+    border-width: 2px 0 2px 0 ;
+    border-color: var(--main-dark);
+    background-color: var(--main);
+}

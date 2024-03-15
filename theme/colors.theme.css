@@ -1,0 +1,23 @@
+:root {
+    --main-dark: #4b4335;
+    --main : #8D8067;
+    --main-light: #E7BE84;
+    --main-Xlight: #F0E2C0;
+
+    --bg-main: #93a160 ;
+    --bg-main-dark: #61785a;
+
+    --text-black: #0c0C0C;
+    --text-white: #fafafa;
+
+    --bg-black: #0c0c0C;
+
+    --dawn: #af8242;
+    --morning: #ca9140;
+    --noon: #E7BE84;
+    --afterNoon: #f2c17b;
+    --endNoon: #e18957;
+    --twilight: #b24342;
+    --nightStart: #151945 ;
+    --night: #09071a;
+}

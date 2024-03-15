@@ -1,0 +1,28 @@
+.propertyBox {
+    border-radius: 1rem;
+    border-color: var(--main);
+    border-width: 2px;
+    background-color: var(--dawn);
+    color: var(--text-white);
+}
+
+.propertyBox:nth-child(even) {
+background-color: var(--main-dark);
+}
+
+.editProperty {
+    border-radius: 3rem;
+    border-width: 1px;
+    border-color: var(--main-light);
+}
+
+.addProperty {
+    background-color: var(--main);
+    border-width: 2px;
+    border-color: var(--main-light);
+    border-radius: 2rem;
+}
+
+.inputAddProperty {
+    border-radius: 2rem;
+}

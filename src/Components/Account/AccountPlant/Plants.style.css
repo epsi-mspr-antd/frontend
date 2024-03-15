@@ -1,0 +1,28 @@
+.plantBox {
+    border-radius: 1rem;
+    border-color: var(--main);
+    border-width: 2px;
+    background-color: var(--dawn);
+    color: var(--text-white);
+}
+
+.plantBox:nth-child(even) {
+background-color: var(--main-dark);
+}
+
+.editPlant {
+    border-radius: 3rem;
+    border-width: 1px;
+    border-color: var(--main-light);
+}
+
+.addPlant {
+    background-color: var(--main);
+    border-width: 2px;
+    border-color: var(--main-light);
+    border-radius: 2rem;
+}
+
+.inputAddPlant {
+    border-radius: 2rem;
+}

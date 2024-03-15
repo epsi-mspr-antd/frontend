@@ -1,0 +1,18 @@
+.navMenu {
+    border-radius: 50px 0 0 50px;
+    background-color: var(--main-dark);
+    color: var(--text-white);
+}
+
+.linkElement {
+    background-color: red;
+}
+
+ul>a {
+    background-color: var(--bg-main);
+    border-radius: 25px 0 0 75px;
+}
+
+ul>a:nth-child(odd) {
+    background-color: var(--bg-main-dark);
+}

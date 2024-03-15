@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">arosaje-front</string>
+    <string name="title_activity_main">arosaje-front</string>
+    <string name="package_name">arosaje.mspr.antd</string>
+    <string name="custom_url_scheme">arosaje.mspr.antd</string>
+</resources>
