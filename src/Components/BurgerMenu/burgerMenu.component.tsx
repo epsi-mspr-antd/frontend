@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Hamburger from './.../../../../../Ressources/SVG/burger-menu-svgrepo-com.svg';
 import { NavigationMenu } from './NavigationMenu/NavigationMenu.component';
 import { Link } from 'react-router-dom';
-import Logo from './../../../Ressources/SVG/Logo.svg';
+import Logo from './../../../Ressources/SVG/logoBackground.svg';
 import Map from './../../../Ressources/SVG/map.svg';
 
 
@@ -16,9 +16,9 @@ export function BurgerMenu() {
     return (
         <>
             <footer className='w-full flex justify-between items-center pb-3 px-2'>
-                <div className='w-14 bg-black'>
+                <Link to=".." className='w-20'>
                     <img src={Logo} className='' alt='Logo' />
-                </div>
+                </Link>
                 <Link to="/map" className='w-14'>
                     <img src={Map} className='' alt='Logo' />
                 </Link>
@@ -34,7 +34,7 @@ export function BurgerMenu() {
                     <button onClick={handleClick} className="absolute z-0 top-0 left-0 w-full h-full blur-xl bg-gray-500 opacity-50">
                     </button>
                     <div>
-                        <NavigationMenu />
+                        <NavigationMenu isOpened={isOpened} setIsOpened={setIsOpened} />
                     </div>
                 </>
                 :

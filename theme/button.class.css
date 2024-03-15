@@ -34,3 +34,7 @@
     background-color: var(--btn-active-bg-hover);
     border-color: var(--btn-active-border-hover);
 }
+
+.btn[type="submit"]{
+    background-color: var(--btn-primary-bg);
+}

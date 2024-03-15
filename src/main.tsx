@@ -9,6 +9,7 @@ import { Properties } from './Components/Account/AccountProperties/Properties.co
 import { Plants } from './Components/Account/AccountPlant/Plant.component.tsx';
 import { Error404 } from './Components/404/404.component.tsx';
 import { MapPage } from './Components/Map/mapPage.component.tsx';
+import { Register } from './Components/Register/register.component.tsx';
 
 const router = createBrowserRouter([
   {
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
   },
   {
     path:"/register",
-    element: <div>Insérer le composant correspondant au register dans main.tsx !</div>
+    element: <Register/>
   },
   {
     path:"/map",
