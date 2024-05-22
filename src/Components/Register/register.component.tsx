@@ -4,9 +4,10 @@ import './register.style.css';
 import { BentoGeneric } from '../../BentoDesign/BentoGeneric.component';
 import { Header } from '../Header/header.component';
 import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importer useNavigate
+import { ErrorResponse, useNavigate } from 'react-router-dom'; // Importer useNavigate
 import { signUp } from '../../utils/API/auth.service';
 import { AuthContext } from '../../Contexte/AuthContext';
+import { AuthResponse } from '../../Interface/User/user.interface';
 
 export const Register = () => {
     const authContext = useContext(AuthContext)
@@ -17,25 +18,24 @@ export const Register = () => {
 
     const navigate = useNavigate();
 
-    const handleChange = (e) => {
+    const handleChange = (e: { target: { name: any; value: any; }; }) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();        
         try {
-            const response = await signUp(formData);
+            const response: AuthResponse = await signUp(formData);
             authContext.updateEmail(formData.email);
             authContext.updateAccessToken(response.data.access_token);
             authContext.updateRefreshToken(response.data.refresh_token);
             navigate('/account'); 
         } catch (error) {
-            console.error('Erreur lors de l\'inscription:', error.message);
+            throw new Error('Erreur lors de l\'inscription')
         } 
-
     };
 
     return (
