@@ -6,6 +6,7 @@ import { Header } from '../Header/header.component';
 import './login.style.css';
 
 import { useContext, useState } from 'react';
+import { AuthResponse } from '../../Interface/User/user.interface';
 
 export const Login = () => {
     const authContext = useContext(AuthContext);
@@ -25,13 +26,13 @@ export const Login = () => {
     const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();        
         try {
-            const response = await signIn(formData);
+            const response: AuthResponse = await signIn(formData);
             authContext.updateEmail(formData.email);
             authContext.updateAccessToken(response.data.access_token);
             authContext.updateRefreshToken(response.data.refresh_token);
             navigate('/account'); 
         } catch (error) {
-            console.error('Erreur lors de l\'inscription:', error.message);
+            throw new Error('Erreur à la connexion')
         } 
     };
 
