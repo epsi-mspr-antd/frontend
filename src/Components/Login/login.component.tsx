@@ -1,16 +1,18 @@
+import { useNavigate } from 'react-router-dom';
 import { BentoGeneric } from '../../BentoDesign/BentoGeneric.component';
+import { AuthContext } from '../../Contexte/AuthContext';
+import { signIn } from '../../utils/API/auth.service';
 import { Header } from '../Header/header.component';
 import './login.style.css';
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 
 export const Login = () => {
+    const authContext = useContext(AuthContext);
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        lastName: '',
-        firstName: '',
         email: '',
-        password: '',
-        phone: ''
+        password: '',       
     });
 
     const handleChange = (e: { target: { name: any; value: any; }; }) => {
@@ -20,9 +22,17 @@ export const Login = () => {
         });
     };
 
-    const handleSubmit = (e: { preventDefault: () => void; }) => {
-        e.preventDefault();
-        // TODO
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
+        e.preventDefault();        
+        try {
+            const response = await signIn(formData);
+            authContext.updateEmail(formData.email);
+            authContext.updateAccessToken(response.data.access_token);
+            authContext.updateRefreshToken(response.data.refresh_token);
+            navigate('/account'); 
+        } catch (error) {
+            console.error('Erreur lors de l\'inscription:', error.message);
+        } 
     };
 
     return(
