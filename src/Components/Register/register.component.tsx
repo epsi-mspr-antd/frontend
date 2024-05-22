@@ -25,9 +25,7 @@ export const Register = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        navigate('/account'); 
-        
+        e.preventDefault();        
         try {
             const response = await signUp(formData);
             authContext.updateEmail(formData.email);
