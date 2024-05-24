@@ -1,7 +1,6 @@
 import './AccountHeader.style.css';
 import './../../../../Ressources/SVG/plants.svg'
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
 
 export const AccountHeader = () => {
     let IconsURL = {
@@ -9,7 +8,7 @@ export const AccountHeader = () => {
         homes: './../../../../Ressources/SVG/homes.svg',
         settings: './../../../../Ressources/SVG/setting.svg'
     }
-const [path,setPath] = useState(window.location.pathname)
+const path = window.location.pathname
 const activeClass = 'pictureContainerActive',
 defaultClass = 'pictureContainer'
 

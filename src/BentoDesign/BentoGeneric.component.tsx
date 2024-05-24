@@ -1,4 +1,4 @@
-import React, { ReactElement, } from "react";
+import React from "react";
 import { BurgerMenu } from "../Components/BurgerMenu/burgerMenu.component";
 import { Bento3 } from "../Interface/Bento3.interface";
 import './BentoGeneric.style.css';

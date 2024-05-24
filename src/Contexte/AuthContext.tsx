@@ -1,57 +1,53 @@
-import { createContext, useState } from "react";
+import React, { createContext, useState } from "react";
+import { AuthProviderProps } from "../Interface/React/React.interface";
 
 // TODO: Make it consistent with cookies / cache. Refresh. Cookies favorite
 
-export const AuthContext = createContext({
+interface AuthContextType {
+    email: string;
+    accessToken: string;
+    refreshToken: string;
+    updateEmail: (email: string) => string;
+    updateAccessToken: (accessToken: string) => string;
+    updateRefreshToken: (refreshToken: string) => string;
+}
+
+export const AuthContext = createContext<AuthContextType>({
     email: '',
-        accessToken: '',
-        refreshToken: '',
-        updateEmail(email: string) {
-        },
-        updateAccessToken(accessToken: string) {
-        },
-        updateRefreshToken(refreshToken: string) {
-        }
-})
+    accessToken: '',
+    refreshToken: '',
+    updateEmail: (email: string) => email,
+    updateAccessToken: (accessToken: string) => accessToken,
+    updateRefreshToken: (refreshToken: string) => refreshToken,
+});
 
 
-export const AuthProvider = ({ children }) => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [email, setEmail] = useState('');
     const [accessToken, setAccessToken] = useState('');
     const [refreshToken, setRefreshToken] = useState('');
 
-    const updateEmail = (email: string) => {
-        setEmail(email)
-    };
-
-    const updateAccessToken = (accessToken: string) => {
-        setAccessToken(accessToken)
-    };
-
-    const updateRefreshToken = (refreshToken: string) => {
-        setRefreshToken(refreshToken)
-    };
-
-    const AuthValue = {
-        email: email,
-        accessToken: accessToken,
-        refreshToken: refreshToken,
+    const AuthValue: AuthContextType = {
+        email,
+        accessToken,
+        refreshToken,
         updateEmail(email: string) {
-            setEmail(email)
+            setEmail(email);
+            return email;
         },
         updateAccessToken(accessToken: string) {
-            setAccessToken(accessToken)
+            setAccessToken(accessToken);
+            return accessToken;
         },
         updateRefreshToken(refreshToken: string) {
-            setRefreshToken(refreshToken)
-        }
-    }
+            setRefreshToken(refreshToken);
+            return refreshToken;
+        },
+    };
 
     return (
-        <>
-            <AuthContext.Provider value={AuthValue}>
-                {children}
-            </AuthContext.Provider>
-        </>
-    )
-}
+        <AuthContext.Provider value={AuthValue}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
