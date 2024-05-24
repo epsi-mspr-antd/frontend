@@ -4,7 +4,7 @@ import './register.style.css';
 import { BentoGeneric } from '../../BentoDesign/BentoGeneric.component';
 import { Header } from '../Header/header.component';
 import { useContext, useState } from 'react';
-import { ErrorResponse, useNavigate } from 'react-router-dom'; // Importer useNavigate
+import { useNavigate } from 'react-router-dom'; // Importer useNavigate
 import { signUp } from '../../utils/API/auth.service';
 import { AuthContext } from '../../Contexte/AuthContext';
 import { AuthResponse } from '../../Interface/User/user.interface';
