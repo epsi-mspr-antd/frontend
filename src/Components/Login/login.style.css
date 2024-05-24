@@ -1,7 +1,7 @@
 #btn_login_submit{
     background-color: var(--btn-secondary-bg);
     color: var(--text-white);
-    border-color: var(--bg-secondary-border);
+    border-color: var(--btn-secondary-border);
     border-radius: 2rem;
     padding: 6px;
 }
@@ -10,6 +10,12 @@
     border-color: var(--btn-secondary-border-hover);
 }
 
-.inputLogin{
+.inputLogin {
     border-radius: 2rem;
+}
+
+.formLogin{
+    background-color: var(--main-dark);
+    border-radius: 2rem;
+    font-size: x-large;
 }

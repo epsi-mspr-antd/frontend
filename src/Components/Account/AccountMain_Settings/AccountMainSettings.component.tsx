@@ -30,8 +30,8 @@ export const AccountSettings = () => {
             </div>
             <div className='flex justify-around mt-4'>
                 {currentRoute === routes.Settings ?
-                    <button className='btn-active px-6 py-4' onClick={() => switchRoute(routes.Sharing)}> Voir Paramètres </button> :
-                    <button className='btn-active px-6 py-4' onClick={() => switchRoute(routes.Settings)}> Voir Profil </button>
+                    <button className='btn-active px-6 py-4 text-xl' onClick={() => switchRoute(routes.Sharing)}> Voir Paramètres </button> :
+                    <button className='btn-active px-6 py-4 text-xl' onClick={() => switchRoute(routes.Settings)}> Voir Profil </button>
                 }
             </div>
 

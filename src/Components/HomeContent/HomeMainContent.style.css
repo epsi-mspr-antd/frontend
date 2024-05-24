@@ -1,40 +1,40 @@
-        .mainArticle {
-        background: var(--main);
-        padding: 2rem;
-        border-radius: 2rem;
-        border-width: 2px;
-        animation-name: mainInteractif;
-        animation-duration: 10s;
-        animation-iteration-count: infinite;
+.mainArticle {
+    background: var(--main);
+    padding: 2rem;
+    border-radius: 2rem;
+    border-width: 2px;
+    animation-name: mainInteractif;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+}
+
+.mainArticle:nth-child(odd) {
+    animation-delay: 5s;
+}
+
+.detailsSpan {
+    display: none;
+
+}
+
+.mainArticle:hover .detailsSpan {
+    display: block;
+}
+
+@keyframes mainInteractif {
+    0% {
+        border-color: var(--main-light);
     }
-    
-    .mainArticle:nth-child(odd) {
-        animation-delay: 5s;
+    25% {
+        border-color: var(--main);
     }
-    
-    .detailsSpan {
-        display: none;
-        
+    50% {
+        border-color: var(--main-dark);
     }
-    
-    .mainArticle:hover .detailsSpan {
-        display: block;
+    75% {
+        border-color: var(--main);
     }
-    
-    @keyframes mainInteractif {
-        0% {
-            border-color: var(--main-light);
-        }
-        25% {
-            border-color: var(--main);
-        }
-        50% {
-            border-color: var(--main-dark);
-        }
-        75%{
-            border-color: var(--main);
-        }
-        100% {
-            border-color: var(--main-light);
+    100% {
+        border-color: var(--main-light);
     }
-    }
+}

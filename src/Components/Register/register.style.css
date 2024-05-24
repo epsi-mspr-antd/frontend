@@ -1,11 +1,10 @@
 #btn_register_submit{
     background-color: var(--btn-secondary-bg);
     color: var(--text-white);
-    border-color: var(--bg-secondary-border);
+    border-color: var(--btn-secondary-border);
     border-radius: 2rem;
     margin-top: 1rem;
     padding: 6px;
-
 }
 #btn_register_submit:hover {
     background-color: var(--btn-secondary-bg-hover);

@@ -41,14 +41,16 @@ export const Login = () => {
             <BentoGeneric 
                 childHeader={<Header/>}
                 childMain={
-                    <section className='h-full flex flex-col justify-end p-8 text-black'>
-                        <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
-                            <label htmlFor="email">Email :</label>
-                            <input type="email" name="email" id="email" className='inputLogin' value={formData.email} onChange={handleChange} required />
-                            <label htmlFor="password">Mot de passe :</label>
-                            <input type="password" name="password" id="password" className='inputLogin' value={formData.password} onChange={handleChange} required />
-                            <button type="submit" className="mt-8" id="btn_login_submit">Se connecter</button>
-                        </form>
+                    <section className='p-8 text-black h-full'>
+                        <div className='flex justify-center flex-col-reverse h-full p-2'>
+                            <form className='formLogin p-4 flex flex-col gap-4' onSubmit={handleSubmit}>
+                                <label htmlFor="email">Email :</label>
+                                <input type="email" name="email" id="email" className='inputLogin' value={formData.email} onChange={handleChange} required />
+                                <label htmlFor="password">Mot de passe :</label>
+                                <input type="password" name="password" id="password" className='inputLogin' value={formData.password} onChange={handleChange} required />
+                                <button type="submit" className="mt-8 hover:bg-amber-300" id="btn_login_submit">Se connecter</button>
+                            </form>
+                        </div>
                     </section>
                 }
                 childRight={undefined}
