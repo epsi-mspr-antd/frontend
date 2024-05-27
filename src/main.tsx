@@ -12,6 +12,7 @@ import { MapPage } from './Components/Map/mapPage.component.tsx';
 import { Register } from './Components/Register/register.component.tsx';
 import { AccountHome } from './Components/Account/AccountHome/AccountHome.component.tsx';
 import { AuthProvider } from './Contexte/AuthContext.tsx';
+import ProtectedRoute from './Contexte/ProtectedRoute';
 
 const router = createBrowserRouter([
   {
@@ -36,22 +37,16 @@ const router = createBrowserRouter([
   },
   {
     path: "/account",
-    element: <AccountHome />
-  },
-  {
-    path: "/account/settings",
-    element: <Account />
-  },
-  {
-    path: "/account/properties",
-    element: <Properties />
-  },
-  {
-    path: "/account/plants",
-    element: <Plants />
+    element: <ProtectedRoute />,
+    children: [
+      { path: "", element: <AccountHome /> },
+      { path: "settings", element: <Account /> },
+      { path: "properties", element: <Properties /> },
+      { path: "plants", element: <Plants /> },
+    ]
   }
 
-])
+]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
