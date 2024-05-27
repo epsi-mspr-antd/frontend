@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { BentoGeneric } from '../../BentoDesign/BentoGeneric.component';
 import { AuthContext } from '../../Contexte/AuthContext';
-import { signIn } from '../../utils/API/auth.service';
 import { Header } from '../Header/header.component';
+import { signIn } from '../../utils/API/Auth/auth.service';
 import './login.style.css';
 
 import { useContext, useState } from 'react';

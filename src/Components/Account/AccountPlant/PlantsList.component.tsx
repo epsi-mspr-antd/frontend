@@ -1,48 +1,46 @@
 import './Plants.style.css';
-import { PlantsList } from '../../../Interface/Plants/PlantsList.interface';
 
-import useSWR from 'swr';
-import { useState } from 'react';
+// import useSWR from 'swr';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../../../Contexte/AuthContext';
+import { usePlants } from '../../../utils/API/Plants/fetchPlantUser';
+import { Plant } from '../../../Interface/Plants/PlantsList.interface';
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+// const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export const PlantLists = () => {
-
     const [modalState, setModalState] = useState(false)
-    const { data, error } = useSWR('http://localhost:3000/exemple', fetcher);
-
-    const openModal = () => {
-        setModalState(true)
-    }
+    const { accessToken } = useContext(AuthContext);
 
 
-    if (error) return <div>Une erreur s'est produite lors du chargement des données.</div>;
-    if (!data) return <div>Chargement en cours...</div>;
-    console.log('My data : ', data)
+    const { plants, loading } = usePlants(accessToken);
+
+    
+
+    if (loading) return (<div> <span> Récupération des plantes </span> </div>)
+    if (!plants) return (<div> <span> Aucune plante n'a été trouvée </span> </div>)
+
+
 
     return (
         <>
             <div className='flex flex-col gap-2 h-full text-center text-sm'>
                 <h4 className='text-2xl mb-2'> Plants List</h4>
                 <div className='flex flex-col h-[80%] p-2 gap-4 overflow-y-auto plantsBox'>
-                    {data.map((plant: PlantsList) => {
-                        return (
-                            <>
-                                <article key={plant.id} className='flex flex-col py-2 px-4 plantBox'>
-                                    <span className='flex justify-between items-center'>
-                                        <span className='justify-self-end'> ID: {plant.id}</span>
-                                        <h5 className=''> {plant.name} </h5>
-                                        <button className='editPlant p-1'> Edit </button>
-                                    </span>
-                                    <span> Etat : {plant.status.name} </span>
-
+                    {
+                        plants.map((plant: Plant) => {
+                            return (
+                                <article className='flex flex-col'>
+                                    <h4> {plant.name} </h4>
+                                    <span> Espèce : <span> {plant.species.name} </span></span>
+                                    <span> Status : <span> {plant.status.name} </span></span>
                                 </article>
-                            </>
-                        )
-                    })}
+                            )
+                        })
+                    }
                 </div>
                 <div className='flex justify-center my-4'>
-                    <button onClick={() => openModal()} className='btn-primary p-2'> Ajouter une plante</button>
+                    <button className='btn-primary p-2'> Ajouter une plante</button>
                 </div>
             </div>
 

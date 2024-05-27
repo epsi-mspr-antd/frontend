@@ -1,6 +1,5 @@
-import { AuthUser } from "../../Interface/User/user.interface";
-
-const url: string = 'http://localhost:3000';
+import { AuthUser } from "../../../Interface/User/user.interface";
+import { url } from "../url";
 
 export const signUp = async (data: AuthUser) => {
     const urlRegister = url + '/auth/signup';
