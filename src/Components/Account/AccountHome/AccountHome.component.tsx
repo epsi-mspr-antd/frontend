@@ -22,7 +22,7 @@ export const AccountHome = () => {
                                 <div className='flex flex-col gap-4 [&>*]:flex [&>*]:items-center justify-around p-2 h-full'>
 
                                     <article className='accountArticle'>
-                                        <Link to='..' relative='route' className='w-16'>
+                                        <Link to='settings' relative='route' className='w-16'>
                                             <h5> Paramètres</h5>
                                             <img src={Settings} alt="" />
                                         </Link>
