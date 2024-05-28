@@ -32,6 +32,7 @@ export const Register = () => {
             authContext.updateEmail(formData.email);
             authContext.updateAccessToken(response.data.access_token);
             authContext.updateRefreshToken(response.data.refresh_token);
+            authContext.updateUserID(response.data.id);
             navigate('/account'); 
         } catch (error) {
             throw new Error('Erreur lors de l\'inscription')

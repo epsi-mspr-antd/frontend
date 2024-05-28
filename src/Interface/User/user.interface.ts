@@ -5,6 +5,7 @@ export interface AuthUser {
 
 export interface AuthResponse {
     data: {
+        id: number,
         access_token: string,
         refresh_token: string
     }
