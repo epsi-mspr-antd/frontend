@@ -5,6 +5,11 @@
     border-radius: 2rem;
     padding: 6px;
 }
+
+.btn-primary:disabled{
+    background-color: red !important;
+}
+
 .btn-primary:hover {
     background-color: var(--btn-primary-bg-hover) !important;
     border-color: var(--btn-primary-border-hover);

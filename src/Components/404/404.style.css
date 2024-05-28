@@ -1,3 +1,23 @@
-.error {
-    background-color: antiquewhite;
+.Container404 h1 {
+    font-size: 72px;
+    margin: 0;
+}
+
+.Container404 .img {
+    max-width: 2%;
+    height: auto;
+    margin: 20px 0;
+}
+
+.Container404 p{
+    font-size: 18px;
+    margin: 20px 0;
+}
+
+.Container404 a {
+    color: var(--text-white);
+    text-decoration: none;
+}
+.Container404 a:hover {
+    text-decoration: underline;
 }
