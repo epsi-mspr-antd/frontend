@@ -2,7 +2,6 @@
     background-image: url(./../../../Ressources/SVG/freeArt_tree.svg);
     background-size: cover;
     color: var(--text-white);
-    opacity: 0.5;
     }
 
 .header {

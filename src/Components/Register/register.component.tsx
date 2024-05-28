@@ -1,5 +1,3 @@
-// src/components/Register/register.component.js
-
 import './register.style.css';
 import { BentoGeneric } from '../../BentoDesign/BentoGeneric.component';
 import { Header } from '../Header/header.component';
@@ -15,6 +13,12 @@ export const Register = () => {
         email: '',
         password: '',
     });
+
+    const [isChecked, setIsChecked] = useState(false)
+
+    const handleChecked = () => {
+        setIsChecked(!isChecked)
+    }
 
     const navigate = useNavigate();
 
@@ -50,7 +54,12 @@ export const Register = () => {
                             <input type="email" name="email" id="email" className='inputRegister' value={formData.email} onChange={handleChange} required />
                             <label htmlFor="password">Mot de passe :</label>
                             <input type="password" name="password" id="password" className='inputRegister' value={formData.password} onChange={handleChange} required />
-                            <button type="submit" className="btn-primary" id="btn_register_submit">S'enregistrer</button>
+                            <div className='flex'>
+                                <input onClick={handleChecked} type="checkbox" name="" id="" />
+                                <span>Veuillez accepter <a href='..' className='colorLink'>nos conditions générales</a></span>
+                            </div>
+
+                            <button disabled={!isChecked} type="submit" className="btn-primary" id="btn_register_submit">S'enregistrer</button>
                         </form>
                     </section>
                 }
