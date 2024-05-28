@@ -10,3 +10,11 @@ export interface Property {
 export interface PropertiesList{
     data: Property[]
 }
+
+export interface CreateAdress {
+    street: string,
+    zip: string,
+    city: string,
+    latitude: number,
+    longitude: number
+}

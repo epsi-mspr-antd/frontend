@@ -31,3 +31,10 @@ export interface Plant {
 export interface PlantResponse {
     data: Plant[];
 }
+
+export interface CreatePlant {
+    name: string,
+    statusID: number,
+    speciesID: number,
+    adressID: number
+}
