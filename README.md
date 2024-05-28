@@ -116,11 +116,10 @@ The bottom part will have a hamburger Menu. (Footer Component)
     - Account
     - Map (must do test to check if it's dynamic)
 
-## TODO 
+## API Management
 
- Need to : 
- add the Account - Plants page in priority with an API call
- add the Add Plant page with an API post
- Modify the settings page with more padding
- add the Account - Properties page
- add the Add property page
+To create an API call we need :
+1) To create a folder if it doesn't exist in utils/API.
+2) Create a file.service.tsx that will handle the fetche function  such as GET, POST, ... This file must be typed to ensure that we will use the right data as parameter. Most of the time you will also need the access token as parameters and to add it in the header as Authorization.
+3) For the GET function you want to create another file as a custom hook (fetchPlantUser is an exemple) to allow a state management and a simple call in the component.
+4) Use your hook / service in your component to use them.
