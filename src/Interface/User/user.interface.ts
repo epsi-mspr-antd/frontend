@@ -9,3 +9,13 @@ export interface AuthResponse {
         refresh_token: string
     }
 }
+export interface User {
+    id: number;
+    email: string;
+    roles: string[];
+}
+
+export interface UsersList {
+    data: User[];
+}
+
