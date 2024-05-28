@@ -30,6 +30,7 @@ export const Login = () => {
             authContext.updateEmail(formData.email);
             authContext.updateAccessToken(response.data.access_token);
             authContext.updateRefreshToken(response.data.refresh_token);
+            authContext.updateUserID(response.data.id);
             navigate('/account'); 
         } catch (error) {
             throw new Error('Erreur à la connexion')
@@ -48,7 +49,7 @@ export const Login = () => {
                                 <input type="email" name="email" id="email" className='inputLogin' value={formData.email} onChange={handleChange} required />
                                 <label htmlFor="password">Mot de passe :</label>
                                 <input type="password" name="password" id="password" className='inputLogin' value={formData.password} onChange={handleChange} required />
-                                <button type="submit" className="mt-8 hover:bg-amber-300" id="btn_login_submit">Se connecter</button>
+                                <button type="submit" className="mt-8 btn-primary" id="btn_login_submit">Se connecter</button>
                             </form>
                         </div>
                     </section>

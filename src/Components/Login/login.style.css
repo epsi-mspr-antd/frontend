@@ -1,15 +1,3 @@
-#btn_login_submit{
-    background-color: var(--btn-secondary-bg);
-    color: var(--text-white);
-    border-color: var(--btn-secondary-border);
-    border-radius: 2rem;
-    padding: 6px;
-}
-#btn_login_submit:hover {
-    background-color: var(--btn-secondary-bg-hover);
-    border-color: var(--btn-secondary-border-hover);
-}
-
 .inputLogin {
     border-radius: 2rem;
 }
