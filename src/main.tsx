@@ -13,6 +13,7 @@ import { Register } from './Components/Register/register.component.tsx';
 import { AccountHome } from './Components/Account/AccountHome/AccountHome.component.tsx';
 import { AuthProvider } from './Contexte/AuthContext.tsx';
 import ProtectedRoute from './Contexte/ProtectedRoute';
+import { CGU } from './Components/CGU/CGU.component.tsx';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/*",
     element: <Error404 />
+  },
+  {
+    path:"/CGU",
+    element: <CGU/>
   },
   {
     path: "/login",

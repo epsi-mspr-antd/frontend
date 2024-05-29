@@ -1,0 +1,8 @@
+.CGUContainer {
+    background-color: var(--main-dark);
+    border-radius: 2rem;
+}
+
+.CGUContainer h3, h4 {
+    font-weight: bold;
+}
