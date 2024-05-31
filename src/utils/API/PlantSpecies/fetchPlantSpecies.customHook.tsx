@@ -4,12 +4,12 @@ import { PlantSpecies } from '../../../Interface/PlantSpecies/PlantSpecies.inter
 import { AuthContext } from '../../../Interface/User/user.interface';
 import { getFromLocalStorage } from '../../localStorage/localStorage.service';
 
-const storedContext: AuthContext = getFromLocalStorage('authContext');
-const accessToken = storedContext.accessToken;
 
 export const fecthAllPlantSpecies = () => {
   const [species, setSpecies] = useState<PlantSpecies[]>([]);
   const [loading, setLoading] = useState(true);
+  const storedContext: AuthContext = getFromLocalStorage('authContext');
+  const accessToken = storedContext !== null ? storedContext.accessToken : '';
 
   useEffect(() => {
     const fetchUsers = async () => {

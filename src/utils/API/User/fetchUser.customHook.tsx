@@ -4,7 +4,7 @@ import { getAllUsers, getUserByID } from './user.service';
 import { getFromLocalStorage } from '../../localStorage/localStorage.service';
 
 const storedContext: AuthContext = getFromLocalStorage('authContext');
-const accessToken = storedContext.accessToken;
+const accessToken = storedContext !== null ?  storedContext.accessToken : '';
 
 export const fectAllUser = () => {
   const [users, setUsers] = useState<User[]>([]);

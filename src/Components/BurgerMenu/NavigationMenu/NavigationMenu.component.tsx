@@ -2,6 +2,8 @@ import { useContext } from 'react';
 import { AuthContext } from '../../../Contexte/AuthContext';
 import './NavigationMenu.style.css'
 import { Link } from 'react-router-dom';
+import { logOut } from '../../../utils/API/Auth/auth.service';
+import { removeFromLocalStorage } from '../../../utils/localStorage/localStorage.service';
 
 
 type Props = {
@@ -13,6 +15,14 @@ export const NavigationMenu:React.FC<Props> = ({isOpened, setIsOpened}) => {
     const authContext = useContext(AuthContext);
     const handleClick = () => {
         setIsOpened(!isOpened)
+    }
+    const handleLogout = () => {
+        logOut();
+        authContext.updateAccessToken('');
+        authContext.updateEmail('');
+        authContext.updateRefreshToken('');
+        authContext.updateUserID(0)
+        removeFromLocalStorage('authContext');
     }
     return (
         <>
@@ -30,7 +40,7 @@ export const NavigationMenu:React.FC<Props> = ({isOpened, setIsOpened}) => {
                         <Link to={'/contact'} onClick={() => handleClick()}><li> Contact </li></Link>
                         <Link to={'/account'} onClick={() => handleClick()}><li> Mon compte </li></Link>
                         <Link to={'/register'} onClick={() => handleClick()}><li> Ma carte </li></Link>
-                        <Link to={'/register'} onClick={() => handleClick()}><li> Se déconnecter </li></Link>
+                        <Link to={'/register'} onClick={() => handleLogout()}><li> Se déconnecter </li></Link>
                     </ul>
                 }
 

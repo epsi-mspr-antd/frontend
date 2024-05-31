@@ -4,11 +4,11 @@ import { Condition } from '../../../Interface/PlantStatus/PlantStatus.interface'
 import { getFromLocalStorage } from '../../localStorage/localStorage.service';
 import { AuthContext } from '../../../Interface/User/user.interface';
 
-const storedContext: AuthContext = getFromLocalStorage('authContext');
-
-const accessToken = storedContext.accessToken;
 
 export const fectAllPlantStatus = () => {
+
+  const storedContext: AuthContext = getFromLocalStorage('authContext');
+  const accessToken = storedContext !== null ? storedContext.accessToken : '';
   const [status, setStatus] = useState<Condition[]>([]);
   const [loading, setLoading] = useState(true);
 

@@ -3,8 +3,8 @@ import { getFromLocalStorage } from "../../localStorage/localStorage.service";
 import { url } from "../url";
 
 const storedContext: AuthContext = getFromLocalStorage('authContext');
-const userID = storedContext.userID;
-const accessToken = storedContext.accessToken;
+const userID = storedContext !== null ? storedContext.userID : '';
+const accessToken = storedContext !== null ?  storedContext.accessToken : '';
 
 export const updateUser = async (data: unknown) => {
     const urlEditUser = `${url}/users/${userID}`
