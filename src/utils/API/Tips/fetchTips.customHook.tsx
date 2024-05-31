@@ -1,8 +1,13 @@
 import { useState, useEffect } from 'react';
 import { getPlantTips } from './tips.service';
 import { Tip } from '../../../Interface/Tip/Tip.interface';
+import { AuthContext } from '../../../Interface/User/user.interface';
+import { getFromLocalStorage } from '../../localStorage/localStorage.service';
 
-export const fecthTipsByPlantId = (accessToken: string, idPlant: number) => {
+const storedContext: AuthContext = getFromLocalStorage('authContext');
+const accessToken = storedContext.accessToken;
+
+export const fecthTipsByPlantId = ( idPlant: number) => {
     const [tips, setTips] = useState<Tip[]>();
     const [loading, setLoading] = useState(true);
   
@@ -10,7 +15,7 @@ export const fecthTipsByPlantId = (accessToken: string, idPlant: number) => {
       const fetchUsers = async () => {
         try {
           setLoading(true);
-          const data = await getPlantTips(accessToken, idPlant);
+          const data = await getPlantTips(idPlant);
           setTips(data.data);
           setLoading(false);
         } catch (error) {

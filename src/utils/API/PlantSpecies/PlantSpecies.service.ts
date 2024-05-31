@@ -1,6 +1,11 @@
+import { AuthContext } from "../../../Interface/User/user.interface";
+import { getFromLocalStorage } from "../../localStorage/localStorage.service";
 import { url } from "../url";
 
-export const getAllSpecies = async (accessToken: string) => {
+const storedContext: AuthContext = getFromLocalStorage('authContext');
+const accessToken = storedContext.accessToken;
+
+export const getAllSpecies = async () => {
     const urlGetAllPlantSpecies = `${url}/plant-species`
 
     try {

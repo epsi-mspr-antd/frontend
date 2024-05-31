@@ -1,5 +1,6 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { AuthProviderProps } from "../Interface/React/React.interface";
+import { getFromLocalStorage } from "../utils/localStorage/localStorage.service";
 
 // TODO: Make it consistent with cookies / cache. Refresh. Cookies favorite
 
@@ -31,6 +32,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [email, setEmail] = useState('');
     const [accessToken, setAccessToken] = useState('');
     const [refreshToken, setRefreshToken] = useState('');
+
+    useEffect(() => {
+        const storedAuthContext = getFromLocalStorage('authContext');
+        if (storedAuthContext) {
+            setUserID(storedAuthContext.userID);
+            setEmail(storedAuthContext.email);
+            setAccessToken(storedAuthContext.accessToken);
+            setRefreshToken(storedAuthContext.refreshToken);
+        }
+    }, []);
 
     const AuthValue: AuthContextType = {
         userID,

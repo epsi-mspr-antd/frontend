@@ -1,8 +1,7 @@
 import "./Plants.style.css";
 
 // import useSWR from 'swr';
-import { useContext, useState } from "react";
-import { AuthContext } from "../../../Contexte/AuthContext";
+import { useState } from "react";
 import { usePlants } from "../../../utils/API/Plants/fetchPlantUser";
 import { Plant } from "../../../Interface/Plants/PlantsList.interface";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,9 +12,8 @@ import { Link } from "react-router-dom";
 
 export const PlantLists = () => {
   const [modalState, setModalState] = useState(false);
-  const { accessToken } = useContext(AuthContext);
 
-  const { plants, loading } = usePlants(accessToken);
+  const { plants, loading } = usePlants();
 
   if (loading)
     return (

@@ -1,7 +1,12 @@
 import { CreateTip, UpdateTip } from "../../../Interface/Tip/Tip.interface";
+import { AuthContext } from "../../../Interface/User/user.interface";
+import { getFromLocalStorage } from "../../localStorage/localStorage.service";
 import { url } from "../url";
 
-export const createTip = async (accessToken: string, data: CreateTip) => {
+const storedContext: AuthContext = getFromLocalStorage('authContext');
+const accessToken = storedContext.accessToken;
+
+export const createTip = async (data: CreateTip) => {
         const urlCreateTip = `${url}/tips`
     
         try {
@@ -25,7 +30,7 @@ export const createTip = async (accessToken: string, data: CreateTip) => {
     };
     
 
-export const updateTip = async (accessToken: string, data: UpdateTip, idTip: number) => {
+export const updateTip = async (data: UpdateTip, idTip: number) => {
         const urlEditTip = `${url}/plants/${idTip}`
     
         try {
@@ -48,7 +53,7 @@ export const updateTip = async (accessToken: string, data: UpdateTip, idTip: num
         }
     };
 
-export const deletePlantTipByTipID = async (accessToken: string, idTip: number) => {
+export const deletePlantTipByTipID = async (idTip: number) => {
     const urlDeletePlantTip = `${url}/adresses/${idTip}`
 
     try {
@@ -69,7 +74,7 @@ export const deletePlantTipByTipID = async (accessToken: string, idTip: number) 
     }
 }
 
-export const getPlantTips = async (accessToken: string, plantId: number) => {
+export const getPlantTips = async (plantId: number) => {
     const urlGetTipByPlantID = `${url}/tips/plant/${plantId}`
 
     try {
