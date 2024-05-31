@@ -39,3 +39,11 @@
     background-color: var(--btn-active-bg-hover) !important;
     border-color: var(--btn-active-border-hover);
 }
+
+.btn-delete{
+    background-color: var( --twilight);
+    color: var(--text-white);
+    border-color: var(--bg-primary-border);
+    border-radius: 2rem;
+    padding: 6px;
+}

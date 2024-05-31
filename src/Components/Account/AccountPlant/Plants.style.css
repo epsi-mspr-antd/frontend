@@ -10,6 +10,22 @@
 background-color: var(--main-dark);
 }
 
+.plantDetails {
+    background-color: var(--main-light);
+    text-align: left;
+    color: var(--text-black);
+    margin: 0 auto;
+    padding: 10px;
+    width: 90%;
+    border-radius: 8px;
+    position: relative;
+    border: 1px solid black;
+}
+
+.plantDetails h4{
+    color: var(--main-dark)
+}
+
 .editPlant {
     border-radius: 3rem;
     border-width: 1px;
