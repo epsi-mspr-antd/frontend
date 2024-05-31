@@ -10,6 +10,7 @@ import { AuthResponse } from '../../Interface/User/user.interface';
 export const Register = () => {
     const authContext = useContext(AuthContext)
     const [formData, setFormData] = useState({
+        pseudo: '',
         email: '',
         password: '',
     });
@@ -49,14 +50,16 @@ export const Register = () => {
                 childHeader={<Header />}
                 childMain={
                     <section className='sectionRegister flex flex-col justify-center p-8 text-black mt-8'>
-                        <form className='flex flex-col gap-4 text-center' onSubmit={handleSubmit}>
+                        <form className='flex flex-col gap-2 text-center' onSubmit={handleSubmit}>
+                            <label htmlFor="pseudo">Pseudo :</label>
+                            <input type="input" name="pseudo" id="pseudo" className='inputRegister' value={formData.pseudo} onChange={handleChange} required />
                             <label htmlFor="email">Email :</label>
                             <input type="email" name="email" id="email" className='inputRegister' value={formData.email} onChange={handleChange} required />
                             <label htmlFor="password">Mot de passe :</label>
                             <input type="password" name="password" id="password" className='inputRegister' value={formData.password} onChange={handleChange} required />
                             <div className='flex'>
                                 <input onClick={handleChecked} type="checkbox" name="" id="" />
-                                <span>Veuillez accepter <a href='..' className='colorLink'>nos conditions générales</a></span>
+                                <span>Veuillez accepter <a href='./../CGU/' className='colorLink'>nos conditions générales</a></span>
                             </div>
 
                             <button disabled={!isChecked} type="submit" className="btn-primary" id="btn_register_submit">S'enregistrer</button>

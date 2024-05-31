@@ -38,3 +38,22 @@
         border-color: var(--main-light);
     }
 }
+
+.ImgHomeMain{
+    max-height: 50%;
+}
+
+
+.HomeMain h1{
+    text-align: left;
+    margin-left: 8%;
+    color: var(--main-light);
+    font-size: 28px;
+    font-weight: 700;
+    font-family: 'Pacifico', cursive;
+}
+
+.HomeMain p{
+    font-family: 'Pacifico', cursive;
+    width: 200px;
+}

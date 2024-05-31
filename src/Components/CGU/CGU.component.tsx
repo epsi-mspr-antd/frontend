@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { BentoGeneric } from "../../BentoDesign/BentoGeneric.component"
 import { Header } from "../Header/header.component"
 import './CGU.style.css';
@@ -44,6 +45,7 @@ export const CGU = () => {
                             <p>En utilisant notre application, vous reconnaissez avoir lu, compris et accepté les présentes Conditions Générales d'Utilisation.</p>
 
                             <p>Merci d'utiliser notre service !</p>
+                            <Link className="btn-primary" id="btn_register_submit" to={"./../register/"}>Retour</Link>
                         </div>
                     </article>
                 }

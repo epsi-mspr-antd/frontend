@@ -1,0 +1,36 @@
+.detailsPlant {
+    background-color: var(--main-light);
+    text-align: left;
+    color: var(--text-black);
+    margin: 0 auto;
+    padding: 10px;
+    width: 90%;
+    border-radius: 8px;
+    position: relative;
+    border: 1px solid black;
+    font-size: large;
+}
+
+.detailsPlant h4{
+    color: var(--main-dark);
+    font-size: xx-large;
+}
+
+.DetailsSection {
+    margin-top: 20px;
+}
+
+.DetailsSection div{
+    margin-left: 10px;
+}
+
+.modalDelete{
+    background-color: var(--main-dark);
+    color: var(--text-white);
+    margin: 0 auto;
+    padding: 20px;
+    width: 90%;
+    border-radius: 8px;
+    border: 1px solid black;
+}
+
