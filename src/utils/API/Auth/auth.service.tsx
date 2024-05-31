@@ -1,7 +1,6 @@
-import { useContext } from "react";
 import { AuthUser } from "../../../Interface/User/user.interface";
 import { url } from "../url";
-import { AuthContext } from "../../../Contexte/AuthContext";
+import { getFromLocalStorage } from "../../localStorage/localStorage.service";
 
 export const signUp = async (data: AuthUser) => {
     const urlRegister = url + '/auth/signup';
@@ -48,10 +47,11 @@ export const signIn = async (data: AuthUser) => {
     }
 };
 
-export const logOut = async (accessToken: string) => {
-    const urlRegister = url + '/auth/logout';
-    const authContext = useContext(AuthContext)
+export const logOut = async () => {
 
+    const storedContext = getFromLocalStorage('authContext');
+    const accessToken = storedContext !== null ? storedContext.accessToken : '';
+    const urlRegister = url + '/auth/logout';
     try {
         const response = await fetch(urlRegister, {
             method: 'POST',
@@ -67,9 +67,5 @@ export const logOut = async (accessToken: string) => {
     } catch (error) {
         console.error('Erreur lors de l\'appel API:', error);
         throw error;
-    } finally {
-        authContext.updateAccessToken('');
-        authContext.updateRefreshToken('');
-        authContext.updateEmail('');
     }
 }
