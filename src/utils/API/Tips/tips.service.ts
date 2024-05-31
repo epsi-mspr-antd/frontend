@@ -81,9 +81,12 @@ export const deletePlantTipByTipID = async (idTip: number) => {
 }
 
 export const getPlantTips = async (plantId: number) => {
+<<<<<<< HEAD
 
     const storedContext: AuthContext = getFromLocalStorage('authContext');
     const accessToken = storedContext !== null ? storedContext.accessToken : '';
+=======
+>>>>>>> main
     const urlGetTipByPlantID = `${url}/tips/plant/${plantId}`
 
     try {
