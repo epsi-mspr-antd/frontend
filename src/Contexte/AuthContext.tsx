@@ -12,7 +12,7 @@ interface AuthContextType {
     updateEmail: (email: string) => string;
     updateAccessToken: (accessToken: string) => string;
     updateRefreshToken: (refreshToken: string) => string;
-    updateUserID: (userId: number) => number;
+    updateUserID: (userId: number) => number | null;
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -23,7 +23,7 @@ export const AuthContext = createContext<AuthContextType>({
     updateEmail: (email: string) => email,
     updateAccessToken: (accessToken: string) => accessToken,
     updateRefreshToken: (refreshToken: string) => refreshToken,
-    updateUserID: (userId: number) => userId,
+    updateUserID: (userId: number | null) => userId || null,
 });
 
 
@@ -40,7 +40,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             setEmail(storedAuthContext.email);
             setAccessToken(storedAuthContext.accessToken);
             setRefreshToken(storedAuthContext.refreshToken);
-        }
+        } else if (storedAuthContext === null) return ;
     }, []);
 
     const AuthValue: AuthContextType = {

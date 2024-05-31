@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import './Properties.style.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
@@ -7,32 +7,7 @@ import { Property } from "../../../Interface/Properties/PropertiesList.interface
 export const PropertiesList = () => {
     const [modalState, setModalState] = useState(false);
     const [properties, setProperties] = useState<Property[]>([]);
-
-    useEffect(() => {
-        // Simuler la récupération des données
-        const fetchedData = {
-            "data": [
-                {
-                    "id": 16,
-                    "street": "3 Chemin de la pipe",
-                    "zip": "69002",
-                    "city": "Lyon",
-                    "longitude": 1,
-                    "latitude": 1.5
-                },
-                {
-                    "id": 17,
-                    "street": "5 Rue du Soleil",
-                    "zip": "75001",
-                    "city": "Paris",
-                    "longitude": 2,
-                    "latitude": 2.5
-                }
-            ]
-        };
-
-        setProperties(fetchedData.data);
-    }, []);
+    setProperties([])
 
     const openModal = () => {
         setModalState(true);
