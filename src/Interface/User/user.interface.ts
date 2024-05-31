@@ -20,3 +20,10 @@ export interface UsersList {
     data: User[];
 }
 
+export interface AuthContext {
+    userID: number,
+    accessToken: string,
+    refreshToken: string,
+    email: string
+}
+

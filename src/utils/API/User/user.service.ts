@@ -1,7 +1,13 @@
+import { AuthContext } from "../../../Interface/User/user.interface";
+import { getFromLocalStorage } from "../../localStorage/localStorage.service";
 import { url } from "../url";
 
-export const updateUser = async (accessToken: string, idUser: number, data: unknown) => {
-    const urlEditUser = `${url}/users/${idUser}`
+const storedContext: AuthContext = getFromLocalStorage('authContext');
+const userID = storedContext.userID;
+const accessToken = storedContext.accessToken;
+
+export const updateUser = async (data: unknown) => {
+    const urlEditUser = `${url}/users/${userID}`
     
     try {
         const response = await fetch(urlEditUser, {
@@ -23,7 +29,7 @@ export const updateUser = async (accessToken: string, idUser: number, data: unkn
     }
 };
 
-export const getAllUsers = async (accessToken: string) => {
+export const getAllUsers = async () => {
     const urlGetAllUsers = `${url}/users`
 
     try {
@@ -43,8 +49,8 @@ export const getAllUsers = async (accessToken: string) => {
     }
 };
 
-export const getUserByID = async (accessToken: string, idUser: number) => {
-    const urlGetUserByID = `${url}/users/${idUser}`
+export const getUserByID = async () => {
+    const urlGetUserByID = `${url}/users/${userID}`
 
     try {
         const response = await fetch(urlGetUserByID, {

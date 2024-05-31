@@ -1,7 +1,13 @@
 import { CreateAdress } from "../../../Interface/Properties/PropertiesList.interface";
+import { AuthContext } from "../../../Interface/User/user.interface";
+import { getFromLocalStorage } from "../../localStorage/localStorage.service";
 import { url } from "../url";
 
-export const createAdress = async (accessToken: string, data: CreateAdress) => {
+const storedContext: AuthContext = getFromLocalStorage('authContext');
+const accessToken = storedContext.accessToken;
+
+
+export const createAdress = async (data: CreateAdress) => {
     const urlCreateAdress = `${url}/addresses`
 
     try {
@@ -25,7 +31,7 @@ export const createAdress = async (accessToken: string, data: CreateAdress) => {
 };
 
 
-export const editAdress = async (accessToken: string,  data: CreateAdress, idAdress: number) => {
+export const editAdress = async (data: CreateAdress, idAdress: number) => {
     const urlEditAdress = `${url}/adresses/${idAdress}`
 
     try {
@@ -48,7 +54,7 @@ export const editAdress = async (accessToken: string,  data: CreateAdress, idAdr
     }
 };
 
-export const deleteUserAdressById = async (idAdress: number, accessToken: string) => {
+export const deleteUserAdressById = async (idAdress: number) => {
     const urlDeleteUserAdress = `${url}/adresses/${idAdress}`
 
     try {

@@ -1,6 +1,5 @@
 import "./DetailsPlant.style.css";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../../Contexte/AuthContext";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
 import { Link, useLocation } from "react-router-dom";
@@ -9,7 +8,6 @@ import { AccountHeader } from "../AccountHeader/AccountHeader.component";
 import { deleteUserPlantById } from "../../../utils/API/Plants/APIPlants.service";
 
 export const DetailsPlant = () => {
-  const { accessToken } = useContext(AuthContext);
   const location = useLocation();
   const plant = location.state;
 
@@ -18,7 +16,7 @@ export const DetailsPlant = () => {
 
   const handleDelete = async () => {
     if (plantIdToDelete !== null) {
-      await deleteUserPlantById(plantIdToDelete, accessToken);
+      await deleteUserPlantById(plantIdToDelete);
       console.log("Plante supprimée avec ID:", plantIdToDelete);
       setShowModal(false);
       setPlantIdToDelete(null);
