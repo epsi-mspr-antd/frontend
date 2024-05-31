@@ -1,8 +1,14 @@
 import { CreatePlant } from "../../../Interface/Plants/PlantsList.interface";
+import { AuthContext } from "../../../Interface/User/user.interface";
+import { getFromLocalStorage } from "../../localStorage/localStorage.service";
 import { url } from "../url";
-const userID = 1;
 
-export const getUserPlant = async (accessToken: string) => {
+const storedContext: AuthContext = getFromLocalStorage('authContext');
+const userID = storedContext.userID;
+const accessToken = storedContext.accessToken;
+
+// Get User Plants
+export const getUserPlant = async () => {
   const urlGetUserPlant = `${url}/plants/user/${userID}`;
 
   try {
@@ -21,10 +27,8 @@ export const getUserPlant = async (accessToken: string) => {
   }
 };
 
-export const deleteUserPlantById = async (
-  idPlant: number,
-  accessToken: string
-) => {
+// Delete User Plant by ID
+export const deleteUserPlantById = async (idPlant: number) => {
   const urlDeleteUserPlant = `${url}/plants/${idPlant}`;
 
   try {
@@ -44,7 +48,8 @@ export const deleteUserPlantById = async (
   }
 };
 
-export const createPlant = async (accessToken: string, data: CreatePlant) => {
+// Create Plant 
+export const createPlant = async (data: CreatePlant) => {
   const urlCreatePlant = `${url}/plants`;
 
   try {
@@ -66,11 +71,8 @@ export const createPlant = async (accessToken: string, data: CreatePlant) => {
   }
 };
 
-export const editPlant = async (
-  accessToken: string,
-  data: CreatePlant,
-  idPlant: number
-) => {
+// Edit Plant
+export const editPlant = async (data: CreatePlant, idPlant: number) => {
   const urlEditPlant = `${url}/plants/${idPlant}`;
 
   try {

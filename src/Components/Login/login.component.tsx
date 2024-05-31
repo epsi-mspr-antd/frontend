@@ -7,6 +7,7 @@ import './login.style.css';
 
 import { useContext, useState } from 'react';
 import { AuthResponse } from '../../Interface/User/user.interface';
+import { saveToLocalStorage } from '../../utils/localStorage/localStorage.service';
 
 export const Login = () => {
     const authContext = useContext(AuthContext);
@@ -31,6 +32,12 @@ export const Login = () => {
             authContext.updateAccessToken(response.data.access_token);
             authContext.updateRefreshToken(response.data.refresh_token);
             authContext.updateUserID(response.data.id);
+            saveToLocalStorage('authContext', {
+                email: formData.email,
+                accessToken: response.data.access_token,
+                refreshToken: response.data.refresh_token,
+                userID: response.data.id
+            });
             navigate('/account'); 
         } catch (error) {
             throw new Error('Erreur à la connexion')

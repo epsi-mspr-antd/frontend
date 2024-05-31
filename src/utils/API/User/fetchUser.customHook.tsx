@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
-import { User } from '../../../Interface/User/user.interface';
+import { AuthContext, User } from '../../../Interface/User/user.interface';
 import { getAllUsers, getUserByID } from './user.service';
+import { getFromLocalStorage } from '../../localStorage/localStorage.service';
 
-export const fectAllUser = (accessToken: string) => {
+const storedContext: AuthContext = getFromLocalStorage('authContext');
+const accessToken = storedContext.accessToken;
+
+export const fectAllUser = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -10,7 +14,7 @@ export const fectAllUser = (accessToken: string) => {
     const fetchUsers = async () => {
       try {
         setLoading(true);
-        const data = await getAllUsers(accessToken);
+        const data = await getAllUsers();
         setUsers(data.data);
         setLoading(false);
       } catch (error) {
@@ -24,7 +28,7 @@ export const fectAllUser = (accessToken: string) => {
   return { users, loading };
 };
 
-export const fecthUserById = (accessToken: string, idUser: number) => {
+export const fecthUserById = () => {
     const [user, setUser] = useState<User>();
     const [loading, setLoading] = useState(true);
   
@@ -32,7 +36,7 @@ export const fecthUserById = (accessToken: string, idUser: number) => {
       const fetchUsers = async () => {
         try {
           setLoading(true);
-          const data = await getUserByID(accessToken, idUser);
+          const data = await getUserByID();
           setUser(data.data);
           setLoading(false);
         } catch (error) {

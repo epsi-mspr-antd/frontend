@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'; // Importer useNavigate
 import { AuthContext } from '../../Contexte/AuthContext';
 import { signUp } from '../../utils/API/Auth/auth.service';
 import { AuthResponse } from '../../Interface/User/user.interface';
+import { saveToLocalStorage } from '../../utils/localStorage/localStorage.service';
 
 export const Register = () => {
     const authContext = useContext(AuthContext)
@@ -38,6 +39,12 @@ export const Register = () => {
             authContext.updateAccessToken(response.data.access_token);
             authContext.updateRefreshToken(response.data.refresh_token);
             authContext.updateUserID(response.data.id);
+            saveToLocalStorage('authContext', {
+                email: formData.email,
+                accessToken: response.data.access_token,
+                refreshToken: response.data.refresh_token,
+                userID: response.data.id
+            });
             navigate('/account'); 
         } catch (error) {
             throw new Error('Erreur lors de l\'inscription')
