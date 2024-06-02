@@ -16,6 +16,7 @@ import ProtectedRoute from "./Contexte/ProtectedRoute";
 import { CGU } from "./Components/CGU/CGU.component.tsx";
 import { DetailsPlant } from "./Components/Account/AccountDetailsPlant/DetailsPlant.component.tsx";
 import { EditPlant } from "./Components/Account/AccountEditPlant/EditPlant.component.tsx";
+import { AddPlant } from "./Components/Account/AccountAddPlant/AddPlant.component.tsx";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,7 @@ const router = createBrowserRouter([
       { path: "properties", element: <Properties /> },
       { path: "plants", element: <Plants /> },
       { path: "plants/DetailsPlant", element: <DetailsPlant /> },
+      { path: "plants/AddPlant", element: <AddPlant /> },
       { path: "plants/DetailsPlant/EditPlant", element: <EditPlant /> },
     ],
   },
