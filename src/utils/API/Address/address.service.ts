@@ -1,6 +1,7 @@
-import { CreateAdress } from "../../../Interface/Properties/PropertiesList.interface";
 import { AuthContext } from "../../../Interface/User/user.interface";
 import { getFromLocalStorage } from "../../localStorage/localStorage.service";
+import { CreateAdress } from "../../../Interface/Properties/PropertiesList.interface";
+
 import { url } from "../url";
 
 export const createAdress = async (data: CreateAdress) => {
@@ -76,3 +77,22 @@ export const deleteUserAdressById = async (idAdress: number) => {
         throw error;
     }
 };
+
+  export const getUserAddress = async (accessToken: string) => {
+    const urlGetUserAddress = `${url}/me/addresses`;
+   
+    try {
+      const response = await fetch(urlGetUserAddress, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+  
+      const result = await response.json();
+  
+      return result;
+    } catch (error) {
+      console.error("Erreur lors de l'appel API:", error);
+      throw error;
+    }
+  };

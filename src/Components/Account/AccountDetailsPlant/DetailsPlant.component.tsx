@@ -2,10 +2,11 @@ import "./DetailsPlant.style.css";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BentoGeneric } from "../../../BentoDesign/BentoGeneric.component";
 import { AccountHeader } from "../AccountHeader/AccountHeader.component";
 import { deleteUserPlantById } from "../../../utils/API/Plants/APIPlants.service";
+import { url } from "../../../utils/API/url";
 
 export const DetailsPlant = () => {
   const location = useLocation();
@@ -13,6 +14,7 @@ export const DetailsPlant = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [plantIdToDelete, setPlantIdToDelete] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   const handleDelete = async () => {
     if (plantIdToDelete !== null) {
@@ -29,7 +31,8 @@ export const DetailsPlant = () => {
   };
 
   const handleDeleteConfirmed = () => {
-    handleDelete(); // Utilisation de ! pour indiquer que plantIdToDelete ne sera pas null
+    handleDelete();
+    navigate("/account/plants");
   };
 
   return (
@@ -57,15 +60,21 @@ export const DetailsPlant = () => {
                 </p>
                 <p className="DetailsSection flex">
                   {" "}
-                  Adresse : <br />
-                  <div>
+                  Adresse :
+                  <span className="ml-2">
                     <span> {plant.address.street} </span>
                     <br />
                     <span>{plant.address.zip}</span>
                     <br />
                     <span>{plant.address.city}</span>
-                  </div>
+                  </span>
                 </p>
+                {plant.image && (
+                  <img
+                    className="DetailsSectionImg"
+                    src={url + "/static/" + plant.image}
+                  ></img>
+                )}
                 <div className="flex justify-between w-full mt-8">
                   <Link
                     to="EditPlant"

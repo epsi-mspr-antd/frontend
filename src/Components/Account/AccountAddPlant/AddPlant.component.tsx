@@ -1,12 +1,11 @@
-import "./EditPlant.style.css";
-import React, { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { url } from "../../../utils/API/url";
+import "./AddPlant.style.css";
+import { useContext, useState } from "react";
 import { BentoGeneric } from "../../../BentoDesign/BentoGeneric.component";
-import { AccountHeader } from "../AccountHeader/AccountHeader.component";
-import { faRotateLeft, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { editPlant } from "../../../utils/API/Plants/APIPlants.service";
+import { faRotateLeft, faSave } from "@fortawesome/free-solid-svg-icons";
+import { AccountHeader } from "../AccountHeader/AccountHeader.component";
+import { Link, useNavigate } from "react-router-dom";
+import { createPlant } from "../../../utils/API/Plants/APIPlants.service";
 import { CreatePlant } from "../../../Interface/Plants/PlantsList.interface";
 import { AuthContext } from "../../../Contexte/AuthContext";
 import { useAdresses } from "../../../utils/API/Address/fetchAddressUser";
@@ -14,48 +13,21 @@ import { fecthAllPlantSpecies } from "../../../utils/API/PlantSpecies/fetchPlant
 import { fectAllPlantStatus } from "../../../utils/API/PlantStatus/fetchPlantStatus.customHook";
 import { Condition } from "../../../Interface/PlantStatus/PlantStatus.interface";
 
-export const EditPlant = () => {
+export const AddPlant = () => {
+  const navigate = useNavigate();
   const { accessToken } = useContext(AuthContext);
+
   const { addresses, loading: addressesLoading } = useAdresses(accessToken);
   const { species, loading: speciesLoading } = fecthAllPlantSpecies();
   const { statuses, loading: statusesLoading } = fectAllPlantStatus();
-  const navigate = useNavigate();
-  const location = useLocation();
 
-  const [plant, setPlant] = useState({
-    id: "",
+  const [plant, setPlant] = useState<CreatePlant>({
     name: "",
     speciesId: 0,
-    species: "",
     statusId: 0,
-    status: "",
     addressId: 0,
     pic: null,
   });
-
-  useEffect(() => {
-    if (location.state) {
-      setPlant({
-        id: location.state.id || "",
-        name: location.state.name || "",
-        speciesId: location.state.species ? location.state.species.id : "",
-        species: location.state.species ? location.state.species.name : "",
-        statusId: location.state.status ? location.state.status.id : "",
-        status: location.state.status ? location.state.status.name : "",
-        addressId: location.state.address ? location.state.address.id : "",
-        pic: location.state.image || "",
-      });
-    } else {
-      // Gérer le cas où location.state est null ou non défini
-      console.error("Erreur : location.state est null ou non défini");
-      // Redirection vers une page d'erreur par exemple
-      navigate("/error");
-    }
-  }, [location.state, navigate]);
-
-  const handleBackClick = () => {
-    navigate(-1);
-  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -67,14 +39,20 @@ export const EditPlant = () => {
     }));
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      setPlant((prevPlant) => ({
+        ...prevPlant,
+        pic: files[0],
+      }));
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (!location.state) {
-        throw new Error("location.state est null ou non défini");
-      }
-
-      const updatedPlantData: CreatePlant = {
+      const newPlantData: CreatePlant = {
         name: plant.name,
         speciesId: Number(plant.speciesId),
         statusId: Number(plant.statusId),
@@ -82,17 +60,13 @@ export const EditPlant = () => {
         pic: plant.pic,
       };
 
-      // Utilisation de la fonction editPlant avec les données mises à jour
-      await editPlant(
-        updatedPlantData,
-        Number(plant.id) // Assurez-vous que plant.id est un nombre valide
-      );
+      // Utilisation de la fonction createPlant avec les données de la nouvelle plante
+      await createPlant(newPlantData);
 
-      // Redirection vers une autre page après la mise à jour par exemple
-      navigate("account/plants"); // Redirige vers la page principale après la mise à jour
+      // Redirection vers une autre page après la création par exemple
+      navigate("/account/plants");
     } catch (error) {
-      console.error("Erreur lors de la mise à jour de la plante :", error);
-      // Gérer l'erreur ici, par exemple rediriger vers une page d'erreur
+      console.error("Erreur lors de la création de la plante :", error);
       navigate("/error");
     }
   };
@@ -134,14 +108,12 @@ export const EditPlant = () => {
       <BentoGeneric
         childHeader={<AccountHeader />}
         childMain={
-          <div className="flex flex-col gap-2 h-full text-center text-sm">
-            <h3 className="text-2xl mb-2">
-              Modifcation des informations <br></br> de la plante
-            </h3>
-            <div className="editPlant">
+          <article className="flex flex-col gap-2 h-full text-center text-sm">
+            <h4 className="text-2xl mb-2">Ajouter une plante</h4>
+            <div className="addPlant">
               <form
                 onSubmit={handleSubmit}
-                className="inputEditPlant flex flex-col"
+                className="inputAddPlant flex flex-col"
               >
                 <div className="inputEditForm">
                   <div className="form-group">
@@ -152,6 +124,7 @@ export const EditPlant = () => {
                       name="name"
                       value={plant.name}
                       onChange={handleChange}
+                      placeholder="Veuillez saisir le nom de votre plante"
                     />
                   </div>
                   <div className="form-group">
@@ -211,40 +184,30 @@ export const EditPlant = () => {
                       ))}
                     </select>
                   </div>
-                  {plant.pic && (
-                    <div className="form-group mt-5">
-                      <div className="form-group">
-                        <label>Télécharger une nouvelle image : </label>
-                        <input type="file" /*onChange={handleFileChange}*/ />
-                      </div>
-                      {plant.pic && (
-                        <div className="form-group">
-                          <label>Image actuelle : </label>
-                          <img src={`${url}/static/${plant.pic}`} alt="Plant" />
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  <div className="flex justify-between w-full mt-8">
-                    <button
-                      onClick={handleBackClick}
-                      className="btn-secondary flex-1 p-4 mx-2 text-center"
-                    >
-                      <FontAwesomeIcon icon={faRotateLeft} className="mr-2" />
-                      Retour
-                    </button>
-                    <button
-                      type="submit"
-                      className="btn-primary p-4 mx-2 text-center"
-                    >
-                      <FontAwesomeIcon icon={faSave} className="mr-2" />
-                      Enregistrer
-                    </button>
+                  <div className="addSectionImg">
+                    <label>Télécharger une image de votre plante : </label>
+                    <input type="file" onChange={handleFileChange} />
                   </div>
+                </div>
+                <div className="flex justify-between w-full">
+                  <Link
+                    to="./../"
+                    className="btn-secondary flex-1 p-4 mx-2 text-center"
+                  >
+                    <FontAwesomeIcon icon={faRotateLeft} className="mr-2" />
+                    Retour
+                  </Link>
+                  <button
+                    type="submit"
+                    className="btn-primary p-4 mx-2 text-center"
+                  >
+                    <FontAwesomeIcon icon={faSave} className="mr-2" />
+                    Enregistrer
+                  </button>
                 </div>
               </form>
             </div>
-          </div>
+          </article>
         }
         childRight={undefined}
         isBurgerMenu={true}

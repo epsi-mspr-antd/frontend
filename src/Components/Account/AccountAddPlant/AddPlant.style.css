@@ -1,4 +1,4 @@
-.editPlant{
+.addPlant {
     background-color: var(--main-light);
     text-align: left;
     color: var(--text-black);
@@ -12,7 +12,7 @@
     overflow-y: scroll; 
 }
 
-.inputEditPlant input{
+.inputAddPlant, input, select{
     justify-self: left;
     margin-bottom: 1rem;
     border-radius: 2rem;
@@ -22,6 +22,7 @@
     box-sizing: border-box;
 }
 
-.form-group input{
+.addSectionImg{
     margin-top: 10px;
+    border-radius: 8px;
 }
