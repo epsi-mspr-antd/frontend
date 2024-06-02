@@ -14,6 +14,7 @@
 .detailsPlant h4{
     color: var(--main-dark);
     font-size: xx-large;
+    margin-bottom: 30px;
 }
 
 .DetailsSection {
@@ -22,6 +23,11 @@
 
 .DetailsSection div{
     margin-left: 10px;
+}
+
+.DetailsSectionImg{
+    margin-top: 20px;
+    border-radius: 8px;
 }
 
 .modalDelete{
