@@ -17,6 +17,8 @@ import { CGU } from "./Components/CGU/CGU.component.tsx";
 import { DetailsPlant } from "./Components/Account/AccountDetailsPlant/DetailsPlant.component.tsx";
 import { EditPlant } from "./Components/Account/AccountEditPlant/EditPlant.component.tsx";
 import { AddPlant } from "./Components/Account/AccountAddPlant/AddPlant.component.tsx";
+import { AddProperty } from "./Components/Account/AccountProperties/AddProperty/AddProperty.component.tsx";
+import { EditProperty } from "./Components/Account/AccountProperties/EditProperty/EditProperty.component.tsx";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +56,9 @@ const router = createBrowserRouter([
       { path: "plants/DetailsPlant", element: <DetailsPlant /> },
       { path: "plants/AddPlant", element: <AddPlant /> },
       { path: "plants/DetailsPlant/EditPlant", element: <EditPlant /> },
+      { path:'properties/AddProperty', element: <AddProperty/>},
+      { path:'properties/EditProperty', element: <EditProperty/>},
+
     ],
   },
 ]);

@@ -10,18 +10,14 @@ export const createAdress = async (data: CreateAdress) => {
     const urlCreateAdress = `${url}/addresses`
 
     try {
-        const response = await fetch(urlCreateAdress, {
+        await fetch(urlCreateAdress, {
+            method: 'POST',
             headers: {
-                'method': 'POST',
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
         });
-
-        const result = await response.json();
-
-        return result
 
     } catch (error) {
         console.error('Erreur lors de l\'appel API:', error);
@@ -33,12 +29,12 @@ export const createAdress = async (data: CreateAdress) => {
 export const editAdress = async (data: CreateAdress, idAdress: number) => {
     const storedContext: AuthContext = getFromLocalStorage('authContext');
     const accessToken = storedContext !== null ? storedContext.accessToken : '';
-    const urlEditAdress = `${url}/adresses/${idAdress}`
+    const urlEditAdress = `${url}/addresses/${idAdress}`
 
     try {
         const response = await fetch(urlEditAdress, {
+            method: 'PATCH',
             headers: {
-                'method': 'POST',
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json'
             },
@@ -58,19 +54,15 @@ export const editAdress = async (data: CreateAdress, idAdress: number) => {
 export const deleteUserAdressById = async (idAdress: number) => {
     const storedContext: AuthContext = getFromLocalStorage('authContext');
     const accessToken = storedContext !== null ? storedContext.accessToken : '';
-    const urlDeleteUserAdress = `${url}/adresses/${idAdress}`
+    const urlDeleteUserAdress = `${url}/addresses/${idAdress}`
 
     try {
-        const response = await fetch(urlDeleteUserAdress, {
+        await fetch(urlDeleteUserAdress, {
+            method: 'DELETE',
             headers: {
-                'method': 'DELETE',
                 'Authorization': `Bearer ${accessToken}`,
             },
         });
-
-        const result = await response.json();
-
-        return result
 
     } catch (error) {
         console.error('Erreur lors de l\'appel API:', error);
@@ -78,7 +70,9 @@ export const deleteUserAdressById = async (idAdress: number) => {
     }
 };
 
-  export const getUserAddress = async (accessToken: string) => {
+  export const getUserAddress = async () => {
+    const storedContext: AuthContext = getFromLocalStorage('authContext');
+    const accessToken = storedContext !== null ? storedContext.accessToken : '';
     const urlGetUserAddress = `${url}/me/addresses`;
    
     try {

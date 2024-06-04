@@ -1,5 +1,5 @@
 import "./AddPlant.style.css";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { BentoGeneric } from "../../../BentoDesign/BentoGeneric.component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRotateLeft, faSave } from "@fortawesome/free-solid-svg-icons";
@@ -7,7 +7,6 @@ import { AccountHeader } from "../AccountHeader/AccountHeader.component";
 import { Link, useNavigate } from "react-router-dom";
 import { createPlant } from "../../../utils/API/Plants/APIPlants.service";
 import { CreatePlant } from "../../../Interface/Plants/PlantsList.interface";
-import { AuthContext } from "../../../Contexte/AuthContext";
 import { useAdresses } from "../../../utils/API/Address/fetchAddressUser";
 import { fecthAllPlantSpecies } from "../../../utils/API/PlantSpecies/fetchPlantSpecies.customHook";
 import { fectAllPlantStatus } from "../../../utils/API/PlantStatus/fetchPlantStatus.customHook";
@@ -15,9 +14,8 @@ import { Condition } from "../../../Interface/PlantStatus/PlantStatus.interface"
 
 export const AddPlant = () => {
   const navigate = useNavigate();
-  const { accessToken } = useContext(AuthContext);
 
-  const { addresses, loading: addressesLoading } = useAdresses(accessToken);
+  const { addresses, loading: addressesLoading } = useAdresses();
   const { species, loading: speciesLoading } = fecthAllPlantSpecies();
   const { statuses, loading: statusesLoading } = fectAllPlantStatus();
 

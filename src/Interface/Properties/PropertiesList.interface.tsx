@@ -1,10 +1,11 @@
 export interface Property {
     id: number,
+    name: string,
     street: string,
     zip: string,
     city: string,
-    longitude: number,
-    latitude: number
+    longitude: string,
+    latitude: string
 }
 
 export interface PropertiesList{
