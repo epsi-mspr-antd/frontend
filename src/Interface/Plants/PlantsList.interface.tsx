@@ -1,3 +1,5 @@
+import { User } from "../User/user.interface";
+
 interface Status {
   id: number;
   name: string;
@@ -13,6 +15,7 @@ interface Address {
   street: string;
   zip: string;
   city: string;
+  name: string;
   longitude: number;
   latitude: number;
   userId: number;
@@ -27,6 +30,7 @@ export interface Plant {
   species: Species;
   address: Address;
   image: string | null;
+  user: User;
 }
 
 export interface PlantResponse {

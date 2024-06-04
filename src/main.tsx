@@ -19,6 +19,9 @@ import { EditPlant } from "./Components/Account/AccountEditPlant/EditPlant.compo
 import { AddPlant } from "./Components/Account/AccountAddPlant/AddPlant.component.tsx";
 import { AddProperty } from "./Components/Account/AccountProperties/AddProperty/AddProperty.component.tsx";
 import { EditProperty } from "./Components/Account/AccountProperties/EditProperty/EditProperty.component.tsx";
+import { TipsList } from "./Components/Tip/TipsList/TipsList.component.tsx";
+import { EditTip } from "./Components/Tip/EditTip/EditTip.component.tsx";
+import { AddTip } from "./Components/Tip/AddTip/AddTip.component.tsx";
 
 const router = createBrowserRouter([
   {
@@ -53,12 +56,26 @@ const router = createBrowserRouter([
       { path: "settings", element: <Account /> },
       { path: "properties", element: <Properties /> },
       { path: "plants", element: <Plants /> },
-      { path: "plants/DetailsPlant", element: <DetailsPlant /> },
-      { path: "plants/AddPlant", element: <AddPlant /> },
-      { path: "plants/DetailsPlant/EditPlant", element: <EditPlant /> },
-      { path:'properties/AddProperty', element: <AddProperty/>},
-      { path:'properties/EditProperty', element: <EditProperty/>},
-
+      { path: "properties/AddProperty", element: <AddProperty /> },
+      { path: "properties/EditProperty", element: <EditProperty /> },
+    ],
+  },
+  {
+    path: "/plants",
+    element: <ProtectedRoute />,
+    children: [
+      { path: "DetailsPlant/:id", element: <DetailsPlant /> },
+      { path: "AddPlant", element: <AddPlant /> },
+      { path: "EditPlant/:id", element: <EditPlant /> },
+    ],
+  },
+  {
+    path: "/Tip",
+    element: <ProtectedRoute />,
+    children: [
+      { path: ":plantId/TipsList", element: <TipsList /> },
+      { path: ":plantId/EditTip/:tipId", element: <EditTip /> },
+      { path: ":plantId/AddTip", element: <AddTip /> },
     ],
   },
 ]);

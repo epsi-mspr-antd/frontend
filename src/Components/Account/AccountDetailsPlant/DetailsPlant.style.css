@@ -26,7 +26,13 @@
 }
 
 .DetailsSectionImg{
+    width: 80%;
+    height: auto;
+    margin: 0 auto;
     margin-top: 20px;
+}
+
+.DetailsSectionImg img{
     border-radius: 8px;
 }
 
@@ -38,5 +44,9 @@
     width: 90%;
     border-radius: 8px;
     border: 1px solid black;
+}
+
+.btnBack{
+    background-color: var(--bg-black);
 }
 

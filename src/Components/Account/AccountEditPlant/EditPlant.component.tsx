@@ -1,58 +1,54 @@
 import "./EditPlant.style.css";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { url } from "../../../utils/API/url";
+import { useNavigate, useParams } from "react-router-dom";
 import { BentoGeneric } from "../../../BentoDesign/BentoGeneric.component";
 import { AccountHeader } from "../AccountHeader/AccountHeader.component";
 import { faRotateLeft, faSave } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { editPlant } from "../../../utils/API/Plants/APIPlants.service";
-import { CreatePlant } from "../../../Interface/Plants/PlantsList.interface";
 import { useAdresses } from "../../../utils/API/Address/fetchAddressUser";
 import { fecthAllPlantSpecies } from "../../../utils/API/PlantSpecies/fetchPlantSpecies.customHook";
 import { fectAllPlantStatus } from "../../../utils/API/PlantStatus/fetchPlantStatus.customHook";
 import { Condition } from "../../../Interface/PlantStatus/PlantStatus.interface";
+import { usePlantById } from "../../../utils/API/Plants/fetchPlantById";
 
 export const EditPlant = () => {
   const { addresses, loading: addressesLoading } = useAdresses();
   const { species, loading: speciesLoading } = fecthAllPlantSpecies();
   const { statuses, loading: statusesLoading } = fectAllPlantStatus();
+  const { id: idParam } = useParams();
+  const plantId = Number(idParam);
+  const { plant: defaultPlant, loading: plantLoading } = usePlantById(plantId);
   const navigate = useNavigate();
-  const location = useLocation();
 
   const [plant, setPlant] = useState({
-    id: "",
+    id: 0,
     name: "",
     speciesId: 0,
     species: "",
     statusId: 0,
     status: "",
     addressId: 0,
-    pic: null,
+    pic: null as File | null,
   });
 
   useEffect(() => {
-    if (location.state) {
+    if (defaultPlant) {
       setPlant({
-        id: location.state.id || "",
-        name: location.state.name || "",
-        speciesId: location.state.species ? location.state.species.id : "",
-        species: location.state.species ? location.state.species.name : "",
-        statusId: location.state.status ? location.state.status.id : "",
-        status: location.state.status ? location.state.status.name : "",
-        addressId: location.state.address ? location.state.address.id : "",
-        pic: location.state.image || "",
+        id: defaultPlant.id,
+        name: defaultPlant.name,
+        speciesId: defaultPlant.species.id,
+        species: defaultPlant.species.name,
+        statusId: defaultPlant.status.id,
+        status: defaultPlant.status.name,
+        addressId: defaultPlant.address.id,
+        pic: null,
       });
-    } else {
-      // Gérer le cas où location.state est null ou non défini
-      console.error("Erreur : location.state est null ou non défini");
-      // Redirection vers une page d'erreur par exemple
-      navigate("/error");
     }
-  }, [location.state, navigate]);
+  }, [defaultPlant]);
 
   const handleBackClick = () => {
-    navigate(-1);
+    navigate(`/plants/EditPlant/${plantId}`);
   };
 
   const handleChange = (
@@ -68,11 +64,7 @@ export const EditPlant = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (!location.state) {
-        throw new Error("location.state est null ou non défini");
-      }
-
-      const updatedPlantData: CreatePlant = {
+      const updatedPlantData = {
         name: plant.name,
         speciesId: Number(plant.speciesId),
         statusId: Number(plant.statusId),
@@ -87,7 +79,7 @@ export const EditPlant = () => {
       );
 
       // Redirection vers une autre page après la mise à jour par exemple
-      navigate("account/plants"); // Redirige vers la page principale après la mise à jour
+      navigate(`/plants/DetailsPlant/${plant.id}`); // Redirige vers la page principale après la mise à jour
     } catch (error) {
       console.error("Erreur lors de la mise à jour de la plante :", error);
       // Gérer l'erreur ici, par exemple rediriger vers une page d'erreur
@@ -95,10 +87,10 @@ export const EditPlant = () => {
     }
   };
 
-  if (addressesLoading || speciesLoading || statusesLoading) {
+  if (addressesLoading || speciesLoading || statusesLoading || plantLoading) {
     return (
       <div>
-        <span>Récupération des adresses et des espèces</span>
+        <span>Récupération des adresses, des espèces et des plantes </span>
       </div>
     );
   }
@@ -123,6 +115,14 @@ export const EditPlant = () => {
     return (
       <div>
         <span>Aucun état deplante n'a été trouvée</span>
+      </div>
+    );
+  }
+
+  if (!plant || plant.id === 0) {
+    return (
+      <div>
+        <span>Aucune plante n'a été trouvée</span>
       </div>
     );
   }
@@ -209,11 +209,11 @@ export const EditPlant = () => {
                       ))}
                     </select>
                   </div>
-                  {plant.pic && (
+                  {/* {plant.pic && (
                     <div className="form-group mt-5">
                       <div className="form-group">
                         <label>Télécharger une nouvelle image : </label>
-                        <input type="file" /*onChange={handleFileChange}*/ />
+                        <input type="file" onChange={handleFileChange} />
                       </div>
                       {plant.pic && (
                         <div className="form-group">
@@ -222,11 +222,11 @@ export const EditPlant = () => {
                         </div>
                       )}
                     </div>
-                  )}
+                  )} */}
                   <div className="flex justify-between w-full mt-8">
                     <button
                       onClick={handleBackClick}
-                      className="btn-secondary flex-1 p-4 mx-2 text-center"
+                      className="btn-back flex-1 p-4 mx-2 text-center"
                     >
                       <FontAwesomeIcon icon={faRotateLeft} className="mr-2" />
                       Retour

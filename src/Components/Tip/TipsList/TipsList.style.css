@@ -1,0 +1,31 @@
+.scrollable-container {
+    height: 100%;
+    overflow-y: auto;
+  }
+
+.detailsTip {
+    background-color: var(--main-light);
+    text-align: left;
+    color: var(--text-black);
+    margin: 0 auto;
+    padding: 10px;
+    width: 90%;
+    border-radius: 8px;
+    position: relative;
+    border: 1px solid black;
+    font-size: large;
+    margin-bottom: 10px;
+}
+
+.detailsTip,h4{
+    color: var(--main-dark);
+    margin-bottom: 10px;
+}
+
+.detailsTip,p{
+    margin-bottom: 10px;
+}
+
+.colorTitle{
+    color: midnightblue
+}

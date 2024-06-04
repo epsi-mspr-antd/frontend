@@ -11,8 +11,8 @@ export const createTip = async (data: CreateTip) => {
 
     try {
         const response = await fetch(urlCreateTip, {
+            method: 'POST',
             headers: {
-                'method': 'POST',
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json'
             },
@@ -34,12 +34,12 @@ export const updateTip = async (data: UpdateTip, idTip: number) => {
 
     const storedContext: AuthContext = getFromLocalStorage('authContext');
     const accessToken = storedContext !== null ? storedContext.accessToken : '';
-    const urlEditTip = `${url}/plants/${idTip}`
+    const urlEditTip = `${url}/tips/${idTip}`
 
     try {
         const response = await fetch(urlEditTip, {
+            method: 'PATCH',
             headers: {
-                'method': 'POST',
                 'Authorization': `Bearer ${accessToken}`,
                 'Content-Type': 'application/json'
             },
@@ -60,19 +60,15 @@ export const deletePlantTipByTipID = async (idTip: number) => {
 
     const storedContext: AuthContext = getFromLocalStorage('authContext');
     const accessToken = storedContext !== null ? storedContext.accessToken : '';
-    const urlDeletePlantTip = `${url}/adresses/${idTip}`
+    const urlDeletePlantTip = `${url}/tips/${idTip}`
 
     try {
-        const response = await fetch(urlDeletePlantTip, {
+        await fetch(urlDeletePlantTip, {
+            method: 'DELETE',
             headers: {
-                'method': 'DELETE',
                 'Authorization': `Bearer ${accessToken}`,
             },
         });
-
-        const result = await response.json();
-
-        return result
 
     } catch (error) {
         console.error('Erreur lors de l\'appel API:', error);

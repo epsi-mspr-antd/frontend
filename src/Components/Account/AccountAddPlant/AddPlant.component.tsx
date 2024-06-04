@@ -190,7 +190,7 @@ export const AddPlant = () => {
                 <div className="flex justify-between w-full">
                   <Link
                     to="./../"
-                    className="btn-secondary flex-1 p-4 mx-2 text-center"
+                    className="btn-back flex-1 p-4 mx-2 text-center"
                   >
                     <FontAwesomeIcon icon={faRotateLeft} className="mr-2" />
                     Retour
