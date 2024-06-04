@@ -47,3 +47,15 @@
     border-radius: 2rem;
     padding: 6px;
 }
+
+.btn-back{
+    background-color: var(--btn-back-bg) !important;
+    color: var(--text-white);
+    border-color: var(--btn-back-border);
+    border-radius: 2rem;
+    padding: 6px;
+}
+.btn-back:hover {
+    background-color: var(--btn-back-bg-hover) !important;
+    border-color: var(--btn-back-border-hover);
+}

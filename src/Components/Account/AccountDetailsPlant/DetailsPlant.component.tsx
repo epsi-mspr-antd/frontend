@@ -1,20 +1,49 @@
 import "./DetailsPlant.style.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  faTrash,
+  faEdit,
+  faEye,
+  faRotateLeft,
+} from "@fortawesome/free-solid-svg-icons";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { BentoGeneric } from "../../../BentoDesign/BentoGeneric.component";
 import { AccountHeader } from "../AccountHeader/AccountHeader.component";
 import { deleteUserPlantById } from "../../../utils/API/Plants/APIPlants.service";
+
 import { url } from "../../../utils/API/url";
+import { usePlantById } from "../../../utils/API/Plants/fetchPlantById";
+import { AuthContext } from "../../../Contexte/AuthContext";
 
 export const DetailsPlant = () => {
-  const location = useLocation();
-  const plant = location.state;
+  const { id: idParam } = useParams();
+  const id = Number(idParam);
 
+  const { plant, loading } = usePlantById(id);
   const [showModal, setShowModal] = useState(false);
   const [plantIdToDelete, setPlantIdToDelete] = useState<number | null>(null);
   const navigate = useNavigate();
+  const context = useContext(AuthContext);
+
+  if (loading)
+    return (
+      <div>
+        {" "}
+        <span> Récupération des plantes </span>{" "}
+      </div>
+    );
+  if (!plant)
+    return (
+      <div>
+        {" "}
+        <span> Aucune plante n'a été trouvée </span>{" "}
+      </div>
+    );
+
+  const handleBackClick = () => {
+    navigate(`/account/plants`);
+  };
 
   const handleDelete = async () => {
     if (plantIdToDelete !== null) {
@@ -41,10 +70,10 @@ export const DetailsPlant = () => {
         childHeader={<AccountHeader />}
         childMain={
           <article>
-            <div className="flex flex-col gap-2 h-full text-center text-sm">
+            <div className="flex flex-col h-full text-center text-sm">
               <h4 className="text-2xl mb-2">Détails de la plante</h4>
 
-              <div className="detailsPlant">
+              <div className="detailsPlant flex flex-col overflow-y-auto max-h-[65vh]">
                 <h4> {plant.name} </h4>
                 <p className="DetailsSection">
                   {" "}
@@ -70,28 +99,44 @@ export const DetailsPlant = () => {
                   </span>
                 </p>
                 {plant.image && (
-                  <img
-                    className="DetailsSectionImg"
-                    src={url + "/static/" + plant.image}
-                  ></img>
+                  <div className="DetailsSectionImg">
+                    <img src={url + "/static/" + plant.image}></img>
+                  </div>
                 )}
-                <div className="flex justify-between w-full mt-8">
-                  <Link
-                    to="EditPlant"
-                    state={plant}
-                    className="btn-secondary flex-1 p-4 mx-2 text-center"
-                  >
-                    <FontAwesomeIcon icon={faEdit} className="mr-2" />
-                    Éditer
-                  </Link>
-                  <button
-                    className="btn-delete flex-1 p-4 mx-2"
-                    onClick={() => confirmDelete(plant.id)}
-                  >
-                    <FontAwesomeIcon icon={faTrash} className="mr-2" />
-                    Supprimer
-                  </button>
-                </div>
+                {plant.user.id === context.userID && (
+                  <div className="flex justify-between w-full mt-8">
+                    <Link
+                      to={`/plants/EditPlant/${id}`}
+                      className="btn-primary flex-1 p-4 mx-2 text-center"
+                    >
+                      <FontAwesomeIcon icon={faEdit} className="mr-2" />
+                      Éditer
+                    </Link>
+                    <button
+                      className="btn-delete flex-1 p-4 mx-2"
+                      onClick={() => confirmDelete(plant.id)}
+                    >
+                      <FontAwesomeIcon icon={faTrash} className="mr-2" />
+                      Supprimer
+                    </button>
+                  </div>
+                )}
+              </div>
+              <div className="flex justify-between w-full mt-8">
+                <button
+                  onClick={handleBackClick}
+                  className="btn-back flex-1 p-4 mt-4 mx-2 text-center"
+                >
+                  <FontAwesomeIcon icon={faRotateLeft} className="mr-2" />
+                  Retour
+                </button>
+                <Link
+                  to={`/Tip/${plant.id}/TipsList`}
+                  className="btn-secondary flex-1 p-4 mt-4 mx-2 text-center"
+                >
+                  <FontAwesomeIcon icon={faEye} className="mr-2" />
+                  Voir les conseils
+                </Link>
               </div>
             </div>
           </article>

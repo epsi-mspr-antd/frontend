@@ -26,6 +26,28 @@ export const getUserPlant = async () => {
   }
 };
 
+// Get Plant by Id
+export const getPlantById = async (plantId: number) => {
+  const storedContext: AuthContext = getFromLocalStorage("authContext");
+  const accessToken = storedContext !== null ? storedContext.accessToken : "";
+  const urlGetUserPlant = `${url}/plants/${plantId}`;
+
+  try {
+    const response = await fetch(urlGetUserPlant, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    const result = await response.json();
+
+    return result;
+  } catch (error) {
+    console.error("Erreur lors de l'appel API:", error);
+    throw error;
+  }
+};
+
 // Delete User Plant by ID
 export const deleteUserPlantById = async (idPlant: number) => {
   const storedContext: AuthContext = getFromLocalStorage("authContext");

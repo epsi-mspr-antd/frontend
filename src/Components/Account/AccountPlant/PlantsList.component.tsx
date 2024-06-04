@@ -6,16 +6,13 @@ import { usePlants } from "../../../utils/API/Plants/fetchPlantUser";
 import { Plant } from "../../../Interface/Plants/PlantsList.interface";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faPlus } from "@fortawesome/free-solid-svg-icons";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 // const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export const PlantLists = () => {
   const [modalState, setModalState] = useState(false);
-
   const { plants, loading } = usePlants();
-  const location = useLocation();
-  const plant = location.state;
 
   if (loading)
     return (
@@ -35,7 +32,7 @@ export const PlantLists = () => {
   return (
     <>
       <div className="flex flex-col gap-2 h-full text-center text-sm">
-        <h4 className="text-2xl mb-2">Listes des plantes</h4>
+        <h4 className="text-2xl mb-2">Listes de tes plantes</h4>
         <div className="flex flex-col h-[80%] p-2 gap-4 overflow-y-auto plantBox">
           {plants.map((plant: Plant, _index: number) => {
             return (
@@ -57,8 +54,7 @@ export const PlantLists = () => {
                 </div>
                 <div className="flex justify-center items-center">
                   <Link
-                    to="DetailsPlant"
-                    state={plant}
+                    to={`/plants/DetailsPlant/${plant.id}`}
                     className="view-button mr-4"
                   >
                     <FontAwesomeIcon size="2x" icon={faEye} />
@@ -69,8 +65,7 @@ export const PlantLists = () => {
           })}
         </div>
         <Link
-          to="AddPlant"
-          state={plant}
+          to="/plants/AddPlant"
           className="btn-secondary p-4 mx-2 text-center"
         >
           <FontAwesomeIcon icon={faPlus} className="mr-2" />

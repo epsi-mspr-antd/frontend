@@ -13,4 +13,9 @@
     --btn-secondary-border: #3d362b;
     --btn-secondary-bg-hover: #3d362a;
     --btn-secondary-border-hover: #2f2a21;
+
+    --btn-back-bg: #696969; /* Gris dim */
+    --btn-back-border: #505050; /* Gris foncé */
+    --btn-back-bg-hover: #404040; /* Gris très foncé */
+    --btn-back-border-hover: #303030; /* Gris presque noir */
 }
