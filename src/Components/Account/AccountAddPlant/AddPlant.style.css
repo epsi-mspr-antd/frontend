@@ -12,7 +12,7 @@
     overflow-y: scroll; 
 }
 
-.inputAddPlant, input, select{
+.inputAddPlant, .inputAddPlant input, .inputAddPlant select{
     justify-self: left;
     margin-bottom: 1rem;
     border-radius: 2rem;

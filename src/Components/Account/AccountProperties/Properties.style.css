@@ -41,3 +41,21 @@
     cursor: pointer;
     z-index: 1;
 }
+
+.addAddressContainer, .editAddressContainer {
+    background-color: var(--main-light);
+}
+
+.formCreateAdress input{
+    justify-self: left;
+    margin-bottom: 1rem;
+    border-radius: 2rem;
+    padding: 0.5rem;
+    color: var(--main-dark);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.formCreateAdress h4 {
+    background-color: var(--main-dark);
+}

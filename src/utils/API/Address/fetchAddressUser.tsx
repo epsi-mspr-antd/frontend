@@ -1,25 +1,29 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { getUserAddress } from "./address.service";
 import { Property } from "../../../Interface/Properties/PropertiesList.interface";
+import { AuthContext } from "../../../Interface/User/user.interface";
+import { getFromLocalStorage } from "../../localStorage/localStorage.service";
 
-export const useAdresses = (accessToken: string) => {
+export const useAdresses = () => {
   const [addresses, setAddresses] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
+  const storedContext: AuthContext = getFromLocalStorage('authContext');
+  const accessToken = storedContext !== null ? storedContext.accessToken : '';
+
+  const fetchAddresses = useCallback(async () => {
+    try {
+      setLoading(true);
+      const data = await getUserAddress();
+      setAddresses(data.data); // Assumes the data is in data.data based on your earlier structure
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [accessToken]);
 
   useEffect(() => {
-    const fetchAddresses = async () => {
-      try {
-        setLoading(true);
-        const data = await getUserAddress(accessToken);
-        setAddresses(data.data); // Assumes the data is in data.data based on your earlier structure
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     fetchAddresses();
-  }, [accessToken]); // Depend on accessToken to refetch if it changes
+  }, [fetchAddresses]);
 
-  return { addresses, loading };
+  return { addresses, loading, refetch: fetchAddresses };
 };

@@ -15,8 +15,7 @@ import { fectAllPlantStatus } from "../../../utils/API/PlantStatus/fetchPlantSta
 import { Condition } from "../../../Interface/PlantStatus/PlantStatus.interface";
 
 export const EditPlant = () => {
-  const { accessToken } = useContext(AuthContext);
-  const { addresses, loading: addressesLoading } = useAdresses(accessToken);
+  const { addresses, loading: addressesLoading } = useAdresses();
   const { species, loading: speciesLoading } = fecthAllPlantSpecies();
   const { statuses, loading: statusesLoading } = fectAllPlantStatus();
   const navigate = useNavigate();
