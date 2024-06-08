@@ -4,32 +4,12 @@ import { MapCustom } from '../../Service/Leaflet/MapCustom.services';
 import L from 'leaflet';
 import logoMap from './../../../Ressources/SVG/logoMap.svg';
 import { FeatureCollection, Feature, Point } from 'geojson';
-import { IPlantProperties } from '../../Interface/Leaflet/IPlantProperties';
+import { getUserPlant } from '../../utils/API/Plants/APIPlants.service';
+import { Plant } from '../../Interface/Plants/PlantsList.interface';
 
 
 const Map = () => {
     const mapContainerRef = useRef(null);
-
-    // Fonction pour récupérer les données de l'API
-    const fetchData = async () => {
-        try {
-            const res = await fetch('https://api.plantcura.online/plants', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidGVzdEB0ZXN0LmZyIiwicm9sZXMiOlsiT1dORVIiLCJCT1RBTklTVCIsIkdBUkRJQU4iXSwiaWF0IjoxNzE2OTgzMDgyLCJleHAiOjE3MTc1ODc4ODJ9.JQCvVtCAOu2b35t0STLFIAofdyPJyO6Lt1mJawHKZO4"}`
-
-                },
-            });
-            if (!res.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return await res.json();
-        } catch (error) {
-            console.error('Error fetching data:', error);
-            return null;
-        }
-    };
 
     useEffect(() => {
         let mapInstance: MapCustom;
@@ -42,74 +22,57 @@ const Map = () => {
                 iconSize: [38, 95], // size of the icon
             });
 
-            fetchData().then((fetched) => {
+            getUserPlant().then((fetched: any) => {
+                fetched = fetched.data;
                 if (fetched != undefined) {
+                    const plantsByAddress = groupPlantsByAddress(fetched);
 
-                    fetched.data.forEach((item: any) => {
-                        if (item != null && item != undefined) {
-                            const lat = item.address.latitude;
-                            const lng = item.address.longitude;
-                            const type = item.name;
-                            const id = item.id;
-                            const city = item.address.city;
-                            const street = item.address.street;
-                            const status = item.status.name;
-                            const specie = item.species.name;
-                            const zip = item.address.zip;
+                    for (const address in plantsByAddress) {
+                        const plants = plantsByAddress[address];
+                        const latitude = plants[0].address.latitude;
+                        const longitude = plants[0].address.longitude
+                        const addressFull = `${plants[0].address.street}, ${plants[0].address.city}, ${plants[0].address.zip}`
 
-                            console.log(item);
-
-                            const geojsonData: FeatureCollection<Point, IPlantProperties> = {
-                                "type": "FeatureCollection",
-                                "features": [
-                                    {
-                                        "type": "Feature",
-                                        "geometry": {
-                                            "type": "Point",
-                                            "coordinates": [lng, lat]
-                                        },
-                                        "properties": {
-                                            "id": id,
-                                            "type": type,
-                                            "specie": specie,
-                                            "status": status,
-                                            "address": {
-                                                "city": city,
-                                                "street": street,
-                                                "zip": zip
-                                            }
-                                        }
+                        const geojsonData: FeatureCollection<Point, any> = {
+                            "type": "FeatureCollection",
+                            "features": [
+                                {
+                                    "type": "Feature",
+                                    "geometry": {
+                                        "type": "Point",
+                                        "coordinates": [longitude, latitude]
+                                    },
+                                    "properties": {
+                                        "address": addressFull,
+                                        "plants": Object.keys(plants).length,
+                                        "plantIds": plants.map((plant: Plant) => plant.id)
                                     }
-                                ]
-                            };
-
-                            function onEachFeature(feature: Feature<Point, IPlantProperties>, layer: L.Layer) {
-                                if (feature.properties) {
-                                  const popupContent = `
-                                    <div>
-                                      <p><strong>Type:</strong> ${feature.properties.type}</p>
-                                      <p><strong>Race:</strong> ${feature.properties.specie}</p>
-                                      <p><strong>Statut:</strong> ${feature.properties.status}</p>
-                                      <p><strong>Adresse:</strong> ${feature.properties.address.zip} ${feature.properties.address.city}, ${feature.properties.address.street}</p>
-                                    </div>
-                                  `;
-                                  (layer as L.Marker).bindPopup(popupContent);
                                 }
-                              }
+                            ]
+                        };
 
-                            L.geoJSON(geojsonData, {
-                                onEachFeature: onEachFeature,
-                                pointToLayer: function (_feature, latlng) {
-                                  return L.marker(latlng, { icon: greenIcon });
-                                }
-                              }).addTo(mapInstance.getMap());
+                        function onEachAddress(feature: Feature<Point, any>, layer: L.Layer) {
+                            if (feature.properties) {
+                                const plantIds = feature.properties.plantIds.join(',');
+                                const popupContent = `
+                                <div>
+                                  <p><strong>Address:</strong> ${feature.properties.address}</p>
+                                  <p><strong>Plants:</strong> ${feature.properties.plants}</p>
+                                  <button><a href="/specific/${plantIds}">Access the plants</a></button>
+                                </div>
+                              `;
+                                (layer as L.Marker).bindPopup(popupContent);
+                            }
                         }
-                    });
-                }
-            });
 
-            mapInstance.getMap().on("click", (e: L.LeafletMouseEvent) => {
-                console.log(e)
+                        L.geoJSON(geojsonData, {
+                            onEachFeature: onEachAddress,
+                            pointToLayer: function (_feature, latlng) {
+                                return L.marker(latlng, { icon: greenIcon });
+                            }
+                        }).addTo(mapInstance.getMap());
+                    }
+                }
             });
 
             mapInstance.getCurrentPosition()
@@ -134,5 +97,19 @@ const Map = () => {
         </div>
     );
 };
+
+function groupPlantsByAddress(plants: Plant[]) {
+    const plantsByAddress: any = {};
+
+    plants.forEach((plant: Plant) => {
+        const address = `${plant.address.street}, ${plant.address.city}, ${plant.address.zip}`;
+        if (!plantsByAddress[address]) {
+            plantsByAddress[address] = [];
+        }
+        plantsByAddress[address].push(plant);
+    });
+
+    return plantsByAddress;
+}
 
 export default Map;

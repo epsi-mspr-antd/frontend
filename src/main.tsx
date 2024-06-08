@@ -17,6 +17,7 @@ import { CGU } from "./Components/CGU/CGU.component.tsx";
 import { DetailsPlant } from "./Components/Account/AccountDetailsPlant/DetailsPlant.component.tsx";
 import { EditPlant } from "./Components/Account/AccountEditPlant/EditPlant.component.tsx";
 import { AddPlant } from "./Components/Account/AccountAddPlant/AddPlant.component.tsx";
+import { SpecificAddress } from "./Components/Map/SpecificAddress/SpecificAddress.component.tsx";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
   {
     path: "/map",
     element: <MapPage />,
+  },
+  {
+    path: "/specific/:ids",
+    element: <SpecificAddress />,
   },
   {
     path: "/account",
