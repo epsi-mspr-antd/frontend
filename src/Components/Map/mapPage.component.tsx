@@ -5,15 +5,11 @@ import './map.style.css';
 
 export const MapPage = () => {
     return (
-        <>
-        <div className='w-full h-screen flex flex-col'>
         <BentoGeneric 
         childHeader={<AccountHeader/>} 
         childMain={<Map />} 
         childRight={undefined} 
         isBurgerMenu={true} 
         isSVGRequired={false}/>
-        </div>
-        </>
     )
 }
