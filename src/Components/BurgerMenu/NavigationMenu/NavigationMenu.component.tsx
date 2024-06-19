@@ -33,10 +33,8 @@ export const NavigationMenu:React.FC<Props> = ({isOpened, setIsOpened}) => {
                     :
                     <ul className='flex flex-col h-full justify-around [&>*]:w-full [&>*]:h-16'>
                         <Link to={'/'}><li> Accueil </li></Link>
-                        <Link to={'/decouverte'} onClick={() => handleClick()}><li> Nous découvrir </li></Link>
-                        <Link to={'/contact'} onClick={() => handleClick()}><li> Contact </li></Link>
                         <Link to={'/account'} onClick={() => handleClick()}><li> Mon compte </li></Link>
-                        <Link to={'/register'} onClick={() => handleClick()}><li> Ma carte </li></Link>
+                        <Link to={'/map'} onClick={() => handleClick()}><li> Ma carte </li></Link>
                         <Link to={'/register'} onClick={() => handleLogout()}><li> Se déconnecter </li></Link>
                     </ul>
                 }
