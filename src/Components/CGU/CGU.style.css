@@ -3,6 +3,6 @@
     border-radius: 2rem;
 }
 
-.CGUContainer h3, h4 {
+.CGUContainer h3, .CGUContainer h4 {
     font-weight: bold;
 }
