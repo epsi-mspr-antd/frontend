@@ -1,21 +1,19 @@
-import { User } from "../User/user.interface";
-
-interface Status {
+export interface Status {
   id: number;
   name: string;
 }
 
-interface Species {
+export interface Species {
   id: number;
   name: string;
 }
 
 export interface Address {
   id: number;
+  name: string;
   street: string;
   zip: string;
   city: string;
-  name: string;
   longitude: number;
   latitude: number;
   userId: number;
@@ -23,24 +21,22 @@ export interface Address {
   updatedAt: string;
 }
 
+export interface Guard {
+  id: number;
+  email: string;
+  pseudo: string;
+}
+
 export interface Plant {
   id: number;
   name: string;
+  image: string | null;
   status: Status;
   species: Species;
   address: Address;
-  image: string | null;
-  user: User;
+  guard: Guard;
 }
 
-export interface PlantResponse {
+export interface ApiResponse {
   data: Plant[];
-}
-
-export interface CreatePlant {
-  name: string;
-  statusId: number;
-  speciesId: number;
-  addressId: number;
-  pic: null | File;
 }
