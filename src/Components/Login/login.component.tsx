@@ -53,9 +53,9 @@ export const Login = () => {
                         <div className='flex justify-center flex-col-reverse h-full p-2'>
                             <form className='formLogin p-4 flex flex-col gap-4' onSubmit={handleSubmit}>
                                 <label htmlFor="email">Email :</label>
-                                <input type="email" name="email" id="email" className='inputLogin' value={formData.email} onChange={handleChange} required />
+                                <input type="email" name="email" id="email" className='inputLogin p-2' value={formData.email} onChange={handleChange} required />
                                 <label htmlFor="password">Mot de passe :</label>
-                                <input type="password" name="password" id="password" className='inputLogin' value={formData.password} onChange={handleChange} required />
+                                <input type="password" name="password" id="password" className='inputLogin p-2' value={formData.password} onChange={handleChange} required />
                                 <button type="submit" className="mt-8 btn-primary" id="btn_login_submit">Se connecter</button>
                             </form>
                         </div>
