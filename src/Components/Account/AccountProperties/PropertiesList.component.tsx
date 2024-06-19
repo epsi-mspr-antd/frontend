@@ -8,12 +8,14 @@ import { Link } from "react-router-dom";
 import { deleteUserAdressById } from '../../../utils/API/Address/address.service';
 
 export const PropertiesList = () => {
-    const { addresses, loading, refetch } = useAdresses();
+    const { addresses, loading, refetch, error } = useAdresses();
 
     async function handleDelete(addressID: number): Promise<void> {
         await deleteUserAdressById(addressID)
         refetch()
     }
+
+    if(error) return(<div> Erreur lors du chargement, veuillez-vous reconnecter ou rafraîchir la page </div>);
 
     return (
         <div className='flex flex-col gap-2 h-full text-center text-sm'>

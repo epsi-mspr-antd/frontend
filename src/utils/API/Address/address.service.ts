@@ -1,8 +1,9 @@
 import { AuthContext } from "../../../Interface/User/user.interface";
 import { getFromLocalStorage } from "../../localStorage/localStorage.service";
-import { CreateAdress } from "../../../Interface/Properties/PropertiesList.interface";
+import { CreateAdress, Property } from "../../../Interface/Properties/PropertiesList.interface";
 
 import { url } from "../url";
+import { ErrorAPI, SuccessResponseWithData } from "../../../Interface/API/APIResponse.interface";
 
 export const createAdress = async (data: CreateAdress) => {
     const storedContext: AuthContext = getFromLocalStorage('authContext');
@@ -70,7 +71,7 @@ export const deleteUserAdressById = async (idAdress: number) => {
     }
 };
 
-  export const getUserAddress = async () => {
+  export const getUserAddress = async ():Promise<ErrorAPI | SuccessResponseWithData<Property[]>> => {
     const storedContext: AuthContext = getFromLocalStorage('authContext');
     const accessToken = storedContext !== null ? storedContext.accessToken : '';
     const urlGetUserAddress = `${url}/me/addresses`;
@@ -87,6 +88,6 @@ export const deleteUserAdressById = async (idAdress: number) => {
       return result;
     } catch (error) {
       console.error("Erreur lors de l'appel API:", error);
-      throw error;
+        return {success: false, message: 'Erreur lors de l\'appel', error: error}
     }
   };

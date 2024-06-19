@@ -7,6 +7,7 @@ import { getFromLocalStorage } from "../../localStorage/localStorage.service";
 export const useAdresses = () => {
   const [addresses, setAddresses] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const storedContext: AuthContext = getFromLocalStorage('authContext');
   const accessToken = storedContext !== null ? storedContext.accessToken : '';
 
@@ -14,7 +15,7 @@ export const useAdresses = () => {
     try {
       setLoading(true);
       const data = await getUserAddress();
-      setAddresses(data.data); // Assumes the data is in data.data based on your earlier structure
+      data.success ?  setAddresses(data.data) : setAddresses([]), setError(true); // Assumes the data is in data.data based on your earlier structure
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -25,5 +26,5 @@ export const useAdresses = () => {
     fetchAddresses();
   }, [fetchAddresses]);
 
-  return { addresses, loading, refetch: fetchAddresses };
+  return { addresses, loading, refetch: fetchAddresses, error };
 };
