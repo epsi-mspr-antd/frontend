@@ -12,6 +12,9 @@
 ul>a {
     background-color: var(--bg-main);
     border-radius: 25px 0 0 75px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 ul>a:nth-child(odd) {

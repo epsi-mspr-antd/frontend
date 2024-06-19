@@ -29,12 +29,10 @@ export const NavigationMenu:React.FC<Props> = ({isOpened, setIsOpened}) => {
             <nav className="navMenu absolute z-2 right-0 bottom-0 h-full w-[60%] flex flex-col justify-center text-center pl-8 py-6">
                 {!authContext.accessToken ?
                     <ul className='flex flex-col h-full justify-around [&>*]:w-full [&>*]:py-4'>
-                        <Link to={'/'} onClick={() => handleClick()}><li> Accueil </li></Link>
-                        <Link to={'/login'} onClick={() => handleClick()}><li> Se connecter </li></Link>
-                        <Link to={'/register'} onClick={() => handleClick()}><li> S'inscrire </li></Link>
+                        Veuillez vous connecter, tricheur ! 
                     </ul>
                     :
-                    <ul className='flex flex-col h-full justify-around [&>*]:w-full '>
+                    <ul className='flex flex-col h-full justify-around [&>*]:w-full [&>*]:h-16'>
                         <Link to={'/'}><li> Accueil </li></Link>
                         <Link to={'/decouverte'} onClick={() => handleClick()}><li> Nous découvrir </li></Link>
                         <Link to={'/contact'} onClick={() => handleClick()}><li> Contact </li></Link>
