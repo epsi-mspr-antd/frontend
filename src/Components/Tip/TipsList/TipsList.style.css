@@ -17,12 +17,12 @@
     margin-bottom: 10px;
 }
 
-.detailsTip,h4{
+.detailsTip h4{
     color: var(--main-dark);
     margin-bottom: 10px;
 }
 
-.detailsTip,p{
+.detailsTi p{
     margin-bottom: 10px;
 }
 
