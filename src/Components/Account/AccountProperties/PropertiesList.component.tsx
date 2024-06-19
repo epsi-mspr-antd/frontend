@@ -15,6 +15,8 @@ export const PropertiesList = () => {
         refetch()
     }
 
+    if(!addresses) return <div> Aucune adresse trouvée </div>
+
     return (
         <div className='flex flex-col gap-2 h-full text-center text-sm'>
             <h4 className='text-2xl mb-2'>Liste de propriétés</h4>

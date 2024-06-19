@@ -36,7 +36,7 @@ export const PlantLists = () => {
         <div className="flex flex-col h-[80%] p-2 gap-4 overflow-y-auto plantBox">
           {plants.map((plant: Plant, _index: number) => {
             return (
-              <article className="plantDetails flex">
+              <article key={plant.id} className="plantDetails flex">
                 <div className="grow">
                   <h4> {plant.name} </h4>
                   <p>
