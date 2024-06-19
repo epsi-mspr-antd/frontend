@@ -24,7 +24,7 @@ export const NavigationMenu:React.FC<Props> = ({isOpened, setIsOpened}) => {
         removeFromLocalStorage('authContext');
     }
     return (
-        <>
+       
             <nav className="navMenu absolute z-2 right-0 bottom-0 h-full w-[60%] flex flex-col justify-center text-center pl-8 py-6">
                 {!authContext.accessToken ?
                     <ul className='flex flex-col h-full justify-around [&>*]:w-full [&>*]:py-4'>
@@ -40,4 +40,6 @@ export const NavigationMenu:React.FC<Props> = ({isOpened, setIsOpened}) => {
                         <Link to={'/register'} onClick={() => handleLogout()}><li> Se déconnecter </li></Link>
                     </ul>
                 }
+                </nav>
+                )
 };
