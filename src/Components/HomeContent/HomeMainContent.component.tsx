@@ -24,8 +24,9 @@ export function HomeMainContent() {
         <div className="HomeMain flex-col overflow-hidden">
           <img className="ImgHomeMain" src={Picture} alt="Logo Arosa-je" />
           <h1>AROSA-JE</h1>
-          <p>
-            Des plantes heureuses,<br></br> un esprit tranquille.
+          <p className="sloganHomePage">
+            Des plantes heureuses,
+            <br /> un esprit tranquille.
           </p>
         </div>
         <article className="mainArticle">

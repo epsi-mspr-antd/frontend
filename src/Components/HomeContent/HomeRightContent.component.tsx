@@ -1,11 +1,9 @@
-import './HomeRightContent.style.css';
+import "./HomeRightContent.style.css";
 
 export const HomeRightContent = () => {
-    return (
-        <>
-        <div className="people absolute bottom-[13%] sm:hidden">
-        
-        </div>
-        </>
-    )
-}
+  return (
+    <>
+      <div className="absolute bottom-[13%] sm:hidden"></div>
+    </>
+  );
+};
