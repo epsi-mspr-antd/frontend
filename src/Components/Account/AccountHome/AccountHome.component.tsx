@@ -1,68 +1,56 @@
-import { BentoGeneric } from '../../../BentoDesign/BentoGeneric.component';
-import { AccountHeader } from '../AccountHeader/AccountHeader.component';
-import './AccountHome.style.css';
-
-import Settings from './../../../../Ressources/SVG/setting.svg';
-import Properties from './../../../../Ressources/SVG/homes.svg';
-import Plants from './../../../../Ressources/SVG/plants.svg';
-import { Link } from 'react-router-dom';
+import { BentoGeneric } from "../../../BentoDesign/BentoGeneric.component";
+import { AccountHeader } from "../AccountHeader/AccountHeader.component";
+import "./AccountHome.style.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCog, faHome, faSeedling } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 export const AccountHome = () => {
-    return (
-        <>
-            <BentoGeneric
-                childHeader={<AccountHeader />}
-                childMain={
-                    <>
-                        <section className='box h-full relative pt-4'>
-                            <h4 className='absolute w-full text-center -top-4 text-3xl'> Bienvenue </h4>
-                            <div className='h-full text-sm p-3 flex flex-col gap-4 text-center'>
-                                <article> Ici vous pourrez retrouver toutes les informations relatives à votre compte</article>
-                                <article> Ces données se partagent en 3 sections : </article>
-                                <div className='flex flex-col gap-4 [&>*]:flex [&>*]:items-center justify-around p-2 h-full'>
+  return (
+    <div className="relative w-full h-screen flex flex-col">
+      <BentoGeneric
+        childHeader={<AccountHeader />}
+        childMain={
+          <div className="h-full flex flex-col gap-2 justify-end text-center text-sm">
+            <section className="box relative pt-4">
+              <h4 className="absolute w-full text-center -top-4 text-3xl">
+                {" "}
+                Bienvenue{" "}
+              </h4>
+              <div className="text-sm p-3 flex flex-col gap-4 text-center">
+                <div className="flex flex-col gap-16 justify-around p-2 h-full">
+                  <Link
+                    className="btn-back flex-1 p-4 mx-2 text-center flex items-center justify-center"
+                    to="settings"
+                  >
+                    <FontAwesomeIcon icon={faCog} className="mr-2 text-xl" />
+                    <h5 className="text-xl"> Paramètres du profil</h5>
+                  </Link>
 
-                                    <article className='accountArticle'>
-                                        <Link to='settings' relative='route' className='w-16'>
-                                            <h5> Paramètres</h5>
-                                            <img src={Settings} alt="" />
-                                        </Link>
-                                        <div className='w-full flex flex-col'>
-                                            <span> Paramètre de partage</span>
-                                            <span> Paramètre du profil </span>
+                  <Link
+                    className="btn-back flex-1 p-4 mx-2 text-center flex items-center justify-center"
+                    to="properties"
+                  >
+                    <FontAwesomeIcon icon={faHome} className="mr-2 text-xl" />
+                    <h5 className="text-xl"> Mes domiciles </h5>
+                  </Link>
 
-                                        </div>
-                                    </article>
-
-                                    <article className='accountArticle'>
-                                        <Link to='properties' className='w-16'>
-                                            <h5> Maisons </h5>
-                                            <img src={Properties} alt="" />
-                                        </Link>
-                                        <span className='w-full'>
-                                            Mes domiciles
-                                        </span>
-                                    </article>
-
-                                    <article className='accountArticle'>
-                                        <Link to='plants' className='w-16'>
-                                        <h5> Plantes </h5>
-                                        <img src={Plants} alt="" />
-                                        </Link>
-                                        <span className='w-full'>
-                                            Mes plantes
-                                        </span>
-                                    </article>
-
-                                </div>
-
-
-                            </div>
-                        </section>
-                    </>
-                }
-                childRight={undefined}
-                isBurgerMenu={true}
-                isSVGRequired={false} />
-        </>
-    )
-}
+                  <Link
+                    to="plants"
+                    className="btn-back flex-1 p-4 mx-2 text-center flex items-center justify-center"
+                  >
+                    <FontAwesomeIcon icon={faSeedling} className="text-xl" />
+                    <h5 className="text-xl"> Mes plantes </h5>
+                  </Link>
+                </div>
+              </div>
+            </section>
+          </div>
+        }
+        childRight={undefined}
+        isBurgerMenu={true}
+        isSVGRequired={true}
+      />
+    </div>
+  );
+};

@@ -1,5 +1,5 @@
 .mainContentBox {
-    background-image: url(./../../../Ressources/SVG/freeArt_tree.svg);
+    background-image: url(./../../../Ressources/SVG/imgBackground.svg);
     background-size: cover;
     color: var(--text-white);
     }
