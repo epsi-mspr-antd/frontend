@@ -7,12 +7,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareCheck, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 import { useUsersGuardingPlant } from "../../../utils/API/PlantGuardians/fetchPlantGuardian";
 import { guardPlant, unguardPlant } from "../../../utils/API/PlantGuardians/APIPlantGuardians.service";
+import { getFromLocalStorage } from "../../../utils/localStorage/localStorage.service";
+import { AuthContext } from "../../../Interface/User/user.interface";
 
 export const SpecificAddressList = () => {
+  const authContext: AuthContext = getFromLocalStorage('authContext');
   const [modalState, setModalState] = useState(false);
   const { ids } = useParams();
   const { plants, loading } = usePlants();
-  const { guardians, loadingGuardian } = useUsersGuardingPlant("1");
+  const { guardians, loadingGuardian } = useUsersGuardingPlant(String(authContext.userID));
 
   const plantIds = ids ? ids.split(',') : [];
   const filteredPlants = plants.filter(plant => plantIds.includes(plant.id.toString()));
