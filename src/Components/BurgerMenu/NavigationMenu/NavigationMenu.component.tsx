@@ -1,10 +1,9 @@
-import { useContext } from 'react';
-import { AuthContext } from '../../../Contexte/AuthContext';
-import './NavigationMenu.style.css'
-import { Link } from 'react-router-dom';
-import { logOut } from '../../../utils/API/Auth/auth.service';
-import { removeFromLocalStorage } from '../../../utils/localStorage/localStorage.service';
-
+import { useContext } from "react";
+import { AuthContext } from "../../../Contexte/AuthContext";
+import "./NavigationMenu.style.css";
+import { Link } from "react-router-dom";
+import { logOut } from "../../../utils/API/Auth/auth.service";
+import { removeFromLocalStorage } from "../../../utils/localStorage/localStorage.service";
 
 type Props = {
     isOpened: boolean,
@@ -41,8 +40,4 @@ export const NavigationMenu:React.FC<Props> = ({isOpened, setIsOpened}) => {
                         <Link to={'/register'} onClick={() => handleLogout()}><li> Se déconnecter </li></Link>
                     </ul>
                 }
-
-            </nav>
-        </>
-    )
-}
+};
