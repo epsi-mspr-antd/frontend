@@ -6,9 +6,9 @@ import { getFromLocalStorage } from "../../localStorage/localStorage.service";
 
 export const useAdresses = () => {
   const [addresses, setAddresses] = useState<Property[]>([]);
-  const [loading, setLoading] = useState(true);
-  const storedContext: AuthContext = getFromLocalStorage('authContext');
-  const accessToken = storedContext !== null ? storedContext.accessToken : '';
+  const [loadingAddresses, setLoading] = useState(true);
+  const storedContext: AuthContext = getFromLocalStorage("authContext");
+  const accessToken = storedContext !== null ? storedContext.accessToken : "";
 
   const fetchAddresses = useCallback(async () => {
     try {
@@ -25,5 +25,5 @@ export const useAdresses = () => {
     fetchAddresses();
   }, [fetchAddresses]);
 
-  return { addresses, loading, refetch: fetchAddresses };
+  return { addresses, loadingAddresses, refetch: fetchAddresses };
 };

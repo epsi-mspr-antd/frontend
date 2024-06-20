@@ -1,44 +1,89 @@
-import './settingsProfile.style.css';
-import Picture from './../../../../../../Ressources/Pictures/Demo/sulliman.jpg'
-import Edit from './../../../../../../Ressources/SVG/setting.svg'
-import { useState } from 'react';
+import "./settingsProfile.style.css";
+import Picture from "./../../../../../../Ressources/Pictures/Demo/sulliman.jpg";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../../../../../Contexte/AuthContext";
+import { logOut } from "../../../../../utils/API/Auth/auth.service";
+import { removeFromLocalStorage } from "../../../../../utils/localStorage/localStorage.service";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fecthUserById } from "../../../../../utils/API/User/fetchUser.customHook";
 
 export const SettingsProfile = () => {
-    let [emailInput, setEmailInput] = useState(true)
-    let [pwdInput, setPwdInput] = useState(true)
-    let [telInput, setTelInput] = useState(true)
+  const authContext = useContext(AuthContext);
+  const { user, loadingUser } = fecthUserById();
 
+  const handleLogout = () => {
+    logOut();
+    authContext.updateAccessToken("");
+    authContext.updateEmail("");
+    authContext.updateRefreshToken("");
+    authContext.updateUserID(0);
+    removeFromLocalStorage("authContext");
+  };
+
+  if (loadingUser) {
     return (
-        <>
-            <h4 className=' w-full text-center text-4xl '> Profil </h4>
-            <div>
-                <div className='flex flex-col items-center mt-2 text-2xl p-2 gap-4'>
-                    <h5> {"Jhon"} </h5>
-                    <section className='imgProfil overflow-hidden'>
-                        <img src={Picture} alt="Picture" style={{ maxHeight: '150px', borderRadius: '50%', objectFit: 'cover', width: '150%' }} />
-                    </section>
+      <div>
+        <span>Récupération de l'utilisateur</span>
+      </div>
+    );
+  }
 
-                    <div className='flex flex-col gap-2 mb-4'>
-                        <section className='flex gap-2'>
-                            <input className='px-2 rounded-md w-full text-lg' type='text' disabled={pwdInput} placeholder={"Jhon Doe"} />
-                            <img src={Edit} alt="" onClick={() => setPwdInput(!pwdInput)} className='w-6' />
-                        </section>
-                        <section className='flex gap-2'>
-                            <input className='rounded-md px-2 w-full text-lg' type="text" disabled={emailInput} placeholder={"jhon.doe@gmail.com"} />
-                            <img src={Edit} alt="" onClick={() => setEmailInput(!emailInput)} className='w-6' />
-                        </section>
-                        <section className='flex gap-2'>
-                            <input className='px-2 rounded-md w-full text-lg' type="tel" disabled={telInput} placeholder={"07 86 45 32 14"} />
-                            <img src={Edit} alt="" onClick={() => setTelInput(!telInput)} className='w-6' />
-                        </section>
-                        <section className='flex gap-2'>
-                            <input className='px-2 rounded-md w-full text-lg' type='password' disabled={pwdInput} placeholder={"********"} />
-                            <img src={Edit} alt="" onClick={() => setPwdInput(!pwdInput)} className='w-6' />
-                        </section>
-                    </div>
-                </div>
+  if (!user) {
+    return (
+      <div>
+        <span>Aucun utilisateur n'a été trouvé</span>
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="h-screen flex flex-col gap-2 text-center text-sm">
+        <h4 className="text-2xl mb-2">Mon profil</h4>
+        <div className="flex flex-col items-center justify-end mt-2 text-2xl p-2 gap-4 settingsBox">
+          <section className="overflow-hidden">
+            <img
+              className="imgProfil"
+              src={Picture}
+              alt="Profil picture"
+              style={{
+                maxHeight: "150px",
+                borderRadius: "50%",
+                objectFit: "cover",
+                width: "150%",
+              }}
+            />
+          </section>
+
+          <div className="flex flex-col gap-2 mb-4">
+            <section className="flex gap-2">
+              <p className="px-2 rounded-md w-full text-lg">{user.pseudo}</p>
+            </section>
+            <section className="flex gap-2">
+              <p className="px-2 rounded-md w-full text-lg">{user.email}</p>
+            </section>
+            <div className="flex justify-between w-full mt-8">
+              <Link
+                className="btn-primary p-4 mx-2 text-center text-lg"
+                to="/login"
+              >
+                <FontAwesomeIcon icon={faEdit} className="mr-2" />
+                Modifier
+              </Link>
+              <Link
+                className="btn-delete p-4 mx-2 text-lg"
+                to={"/"}
+                onClick={() => handleLogout()}
+              >
+                <FontAwesomeIcon icon={faTrash} className="mr-2" />
+                Supprimer
+              </Link>
             </div>
-        </>
-
-    )
-}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};

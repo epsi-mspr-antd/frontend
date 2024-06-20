@@ -15,7 +15,7 @@ import { Condition } from "../../../Interface/PlantStatus/PlantStatus.interface"
 export const AddPlant = () => {
   const navigate = useNavigate();
 
-  const { addresses, loading: addressesLoading } = useAdresses();
+  const { addresses, loadingAddresses: addressesLoading } = useAdresses();
   const { species, loading: speciesLoading } = fecthAllPlantSpecies();
   const { statuses, loading: statusesLoading } = fectAllPlantStatus();
 
