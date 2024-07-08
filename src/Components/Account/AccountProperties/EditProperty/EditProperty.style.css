@@ -1,0 +1,27 @@
+.editProperty{
+    background-color: var(--main-light);
+    text-align: left;
+    color: var(--text-black);
+    margin: 0 auto;
+    padding: 10px;
+    width: 90%;
+    border-radius: 8px;
+    position: relative;
+    border: 1px solid black;
+    font-size: large;
+    overflow-y: scroll; 
+}
+
+.inputEditProperty input{
+    justify-self: left;
+    margin-bottom: 1rem;
+    border-radius: 2rem;
+    padding: 1rem;
+    color: var(--main-dark);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-group input{
+    margin-top: 10px;
+}

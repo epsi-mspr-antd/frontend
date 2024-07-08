@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { AuthContext, User } from '../../../Interface/User/user.interface';
-import { getAllUsers, getUserByID } from './user.service';
-import { getFromLocalStorage } from '../../localStorage/localStorage.service';
+import { useState, useEffect } from "react";
+import { AuthContext, User } from "../../../Interface/User/user.interface";
+import { getAllUsers, getUserByID } from "./user.service";
+import { getFromLocalStorage } from "../../localStorage/localStorage.service";
 
-const storedContext: AuthContext = getFromLocalStorage('authContext');
-const accessToken = storedContext !== null ?  storedContext.accessToken : '';
+const storedContext: AuthContext = getFromLocalStorage("authContext");
+const accessToken = storedContext !== null ? storedContext.accessToken : "";
 
 export const fectAllUser = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -29,23 +29,23 @@ export const fectAllUser = () => {
 };
 
 export const fecthUserById = () => {
-    const [user, setUser] = useState<User>();
-    const [loading, setLoading] = useState(true);
-  
-    useEffect(() => {
-      const fetchUsers = async () => {
-        try {
-          setLoading(true);
-          const data = await getUserByID();
-          setUser(data.data);
-          setLoading(false);
-        } catch (error) {
-          console.error(error);
-        }
-      };
-  
-      fetchUsers();
-    }, [accessToken]);
-  
-    return { user, loading };
-  };
+  const [user, setUser] = useState<User>();
+  const [loadingUser, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        setLoading(true);
+        const data = await getUserByID();
+        setUser(data.data);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUsers();
+  }, [accessToken]);
+
+  return { user, loadingUser };
+};

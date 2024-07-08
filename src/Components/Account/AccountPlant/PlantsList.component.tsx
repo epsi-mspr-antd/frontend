@@ -64,10 +64,7 @@ export const PlantLists = () => {
             );
           })}
         </div>
-        <Link
-          to="/plants/AddPlant"
-          className="btn-secondary p-4 mx-2 text-center"
-        >
+        <Link to="/plants/AddPlant" className="btn-back p-4 mx-2 text-center">
           <FontAwesomeIcon icon={faPlus} className="mr-2" />
           Ajouter une plante
         </Link>

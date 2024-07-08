@@ -13,7 +13,7 @@ import { Condition } from "../../../Interface/PlantStatus/PlantStatus.interface"
 import { usePlantById } from "../../../utils/API/Plants/fetchPlantById";
 
 export const EditPlant = () => {
-  const { addresses, loading: addressesLoading } = useAdresses();
+  const { addresses, loadingAddresses } = useAdresses();
   const { species, loading: speciesLoading } = fecthAllPlantSpecies();
   const { statuses, loading: statusesLoading } = fectAllPlantStatus();
   const { id: idParam } = useParams();
@@ -87,7 +87,7 @@ export const EditPlant = () => {
     }
   };
 
-  if (addressesLoading || speciesLoading || statusesLoading || plantLoading) {
+  if (loadingAddresses || speciesLoading || statusesLoading || plantLoading) {
     return (
       <div>
         <span>Récupération des adresses, des espèces et des plantes </span>
