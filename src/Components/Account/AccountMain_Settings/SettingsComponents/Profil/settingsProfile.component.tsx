@@ -1,5 +1,5 @@
 import "./settingsProfile.style.css";
-import Picture from "./../../../../../../Ressources/Pictures/Demo/sulliman.jpg";
+import Picture from "./../../../../../../Ressources/Pictures/Demo/perso1.svg";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../../Contexte/AuthContext";
@@ -40,22 +40,15 @@ export const SettingsProfile = () => {
 
   return (
     <>
-      <div className="h-screen flex flex-col gap-2 text-center text-sm">
+      <div className="h-screen flex flex-col gap-2 text-center text-sm m-4">
         <h4 className="text-2xl mb-2">Mon profil</h4>
         <div className="flex flex-col items-center justify-end mt-2 text-2xl p-2 gap-4 settingsBox">
-          <section className="overflow-hidden">
-            <img
-              className="imgProfil"
-              src={Picture}
-              alt="Profil picture"
-              style={{
-                maxHeight: "150px",
-                borderRadius: "50%",
-                objectFit: "cover",
-                width: "150%",
-              }}
-            />
-          </section>
+          <img
+            // className="imgProfil"
+            src={Picture}
+            alt="Profil picture"
+            className="max-w-64 rounded-full mt-4"
+          />
 
           <div className="flex flex-col gap-2 mb-4">
             <section className="flex gap-2">
@@ -67,7 +60,8 @@ export const SettingsProfile = () => {
             <div className="flex justify-between w-full mt-8">
               <Link
                 className="btn-primary p-4 mx-2 text-center text-lg"
-                to="/login"
+                to="/account/settings/EditSettingsProfile"
+                state={user}
               >
                 <FontAwesomeIcon icon={faEdit} className="mr-2" />
                 Modifier

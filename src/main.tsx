@@ -22,6 +22,7 @@ import { EditProperty } from "./Components/Account/AccountProperties/EditPropert
 import { TipsList } from "./Components/Tip/TipsList/TipsList.component.tsx";
 import { EditTip } from "./Components/Tip/EditTip/EditTip.component.tsx";
 import { AddTip } from "./Components/Tip/AddTip/AddTip.component.tsx";
+import { EditSettingsProfile } from "./Components/Account/AccountMain_Settings/SettingsComponents/Profil/EditSettingsProfile/EditSettingsProfile.component.tsx";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <AccountHome /> },
       { path: "settings", element: <Account /> },
+      {
+        path: "settings/EditSettingsProfile",
+        element: <EditSettingsProfile />,
+      },
       { path: "properties", element: <Properties /> },
       { path: "plants", element: <Plants /> },
       { path: "properties/AddProperty", element: <AddProperty /> },

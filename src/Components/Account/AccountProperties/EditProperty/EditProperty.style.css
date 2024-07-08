@@ -1,4 +1,4 @@
-.editUser{
+.editProperty{
     background-color: var(--main-light);
     text-align: left;
     color: var(--text-black);
@@ -12,7 +12,7 @@
     overflow-y: scroll; 
 }
 
-.inputEditUser input{
+.inputEditProperty input{
     justify-self: left;
     margin-bottom: 1rem;
     border-radius: 2rem;

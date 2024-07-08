@@ -27,4 +27,3 @@ export interface AuthContext {
     refreshToken: string,
     email: string
 }
-
