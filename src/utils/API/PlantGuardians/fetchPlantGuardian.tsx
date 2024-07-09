@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getUsersGuardingPlant } from './APIPlantGuardians.service';
 import { getFromLocalStorage } from '../../localStorage/localStorage.service';
 
-export const useUsersGuardingPlant = (plantId: string) => {
+export const useUsersGuardingPlant = (plantId: number) => {
   const [guardians, setGuardians] = useState<any[]>([]);
   const [loadingGuardian, setLoading] = useState(true);
   const storedContext = getFromLocalStorage('authContext');
