@@ -15,7 +15,7 @@ import { Condition } from "../../../Interface/PlantStatus/PlantStatus.interface"
 export const AddPlant = () => {
   const navigate = useNavigate();
 
-  const { addresses, loading: addressesLoading } = useAdresses();
+  const { addresses, loadingAddresses: addressesLoading } = useAdresses();
   const { species, loading: speciesLoading } = fecthAllPlantSpecies();
   const { statuses, loading: statusesLoading } = fectAllPlantStatus();
 
@@ -189,7 +189,7 @@ export const AddPlant = () => {
                 </div>
                 <div className="flex justify-between w-full">
                   <Link
-                    to="./../"
+                    to="/account/plants"
                     className="btn-back flex-1 p-4 mx-2 text-center"
                   >
                     <FontAwesomeIcon icon={faRotateLeft} className="mr-2" />

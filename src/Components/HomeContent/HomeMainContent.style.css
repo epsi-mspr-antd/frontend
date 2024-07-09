@@ -1,5 +1,10 @@
+.sloganHomePage{
+    background: rgb(141, 128, 103, 0.9);
+    border-radius: 2rem;
+}
+
 .mainArticle {
-    background: var(--main);
+    background: rgb(141, 128, 103, 0.7);
     padding: 2rem;
     border-radius: 2rem;
     border-width: 2px;

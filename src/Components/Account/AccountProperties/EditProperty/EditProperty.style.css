@@ -1,9 +1,4 @@
-.scrollable-container {
-    height: 100%;
-    overflow-y: auto;
-  }
-
-.detailsTip {
+.editProperty{
     background-color: var(--main-light);
     text-align: left;
     color: var(--text-black);
@@ -14,18 +9,19 @@
     position: relative;
     border: 1px solid black;
     font-size: large;
-    margin-bottom: 10px;
+    overflow-y: scroll; 
 }
 
-.detailsTip h4{
+.inputEditProperty input{
+    justify-self: left;
+    margin-bottom: 1rem;
+    border-radius: 2rem;
+    padding: 1rem;
     color: var(--main-dark);
-    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.detailsTi p{
-    margin-bottom: 10px;
-}
-
-.colorTitle{
-    color: midnightblue
+.form-group input{
+    margin-top: 10px;
 }

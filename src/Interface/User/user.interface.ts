@@ -13,6 +13,7 @@ export interface AuthResponse {
 export interface User {
     id: number;
     email: string;
+    pseudo: string;
     roles: string[];
 }
 
@@ -26,4 +27,3 @@ export interface AuthContext {
     refreshToken: string,
     email: string
 }
-
