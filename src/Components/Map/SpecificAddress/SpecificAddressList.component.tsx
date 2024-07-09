@@ -13,7 +13,7 @@ export const SpecificAddressList = () => {
   const authContext: AuthContext = getFromLocalStorage('authContext');
   const { ids } = useParams();
   const { plants, loading } = usePlants();
-  const { guardians, loadingGuardian } = useUsersGuardingPlant(String(authContext.userID));
+  const { guardians, loadingGuardian } = useUsersGuardingPlant(authContext.userID);
   const [plantFetch, setPlantFetch] = useState<Plant[]>([]);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export const SpecificAddressList = () => {
           className="btn-secondary p-4 mx-2 text-center"
           onClick={async () => {
             const guardPromises = plantFetch.map(async (plant: Plant) => {
-              await getUsersGuardingPlant((authContext.userID)).then((data) => {
+              await getUsersGuardingPlant(authContext.userID).then((data) => {
                 data = data.data
 
                 if (data == undefined) {
