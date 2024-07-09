@@ -3,7 +3,7 @@ import { getFromLocalStorage } from "../../localStorage/localStorage.service";
 import { url } from "../url";
 
 // Get all users guarding a plant
-export const getUsersGuardingPlant = async (plantId: string) => {
+export const getUsersGuardingPlant = async (plantId: number) => {
   const storedContext: AuthContext = getFromLocalStorage("authContext");
   const accessToken = storedContext !== null ? storedContext.accessToken : "";
   const urlGetUsersGuardingPlant = `${url}/plants/guard/${plantId}`;
@@ -25,7 +25,7 @@ export const getUsersGuardingPlant = async (plantId: string) => {
   }
 };
 
-export const guardPlant = async (plantId: string) => {
+export const guardPlant = async (plantId: number) => {
   const storedContext: AuthContext = getFromLocalStorage("authContext");
   const accessToken = storedContext !== null ? storedContext.accessToken : "";
   const urlGuardingPlant = `${url}/plants/guard/${plantId}`;
@@ -34,7 +34,8 @@ export const guardPlant = async (plantId: string) => {
     const response = await fetch(urlGuardingPlant, {
       method: "PATCH",
       headers: {
-        Authorization: `Bearer ${accessToken}`,
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
       },
     });
 
@@ -47,7 +48,7 @@ export const guardPlant = async (plantId: string) => {
   }
 };
 
-export const unguardPlant = async (plantId: string) => {
+export const unguardPlant = async (plantId: number) => {
   const storedContext: AuthContext = getFromLocalStorage("authContext");
   const accessToken = storedContext !== null ? storedContext.accessToken : "";
   const urlUnguardingPlant = `${url}/plants/unguard/${plantId}`;
@@ -57,6 +58,7 @@ export const unguardPlant = async (plantId: string) => {
       method: "PATCH",
       headers: {
         Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json'
       },
     });
 

@@ -3,17 +3,14 @@ import { useEffect, useState } from "react";
 import { usePlants } from "../../../utils/API/Plants/fetchPlantUser";
 import { useParams } from 'react-router-dom';
 import { Plant } from "../../../Interface/Plants/PlantsList.interface";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquareCheck, faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 import { useUsersGuardingPlant } from "../../../utils/API/PlantGuardians/fetchPlantGuardian";
-import { guardPlant, unguardPlant } from "../../../utils/API/PlantGuardians/APIPlantGuardians.service";
+import { guardPlant, getUsersGuardingPlant } from "../../../utils/API/PlantGuardians/APIPlantGuardians.service";
 import { getFromLocalStorage } from "../../../utils/localStorage/localStorage.service";
 import { AuthContext } from "../../../Interface/User/user.interface";
 import { getPlantById } from "../../../utils/API/Plants/APIPlants.service";
 
 export const SpecificAddressList = () => {
   const authContext: AuthContext = getFromLocalStorage('authContext');
-  const [modalState, setModalState] = useState(false);
   const { ids } = useParams();
   const { plants, loading } = usePlants();
   const { guardians, loadingGuardian } = useUsersGuardingPlant(String(authContext.userID));
@@ -27,7 +24,6 @@ export const SpecificAddressList = () => {
       const fetchedPlants = results.map((result) => result.data);
       setPlantFetch(fetchedPlants);
     };
-
     fetchPlants();
   }, [ids]);
 
@@ -54,20 +50,52 @@ export const SpecificAddressList = () => {
               </div>
             </article>
           ))}
+
         </div>
         <button
           className="btn-secondary p-4 mx-2 text-center"
-          onClick={() => {
-            plantFetch.forEach(plant => {
-              console.log("La plante " + plant.id + " est désormais gardé.");
+          onClick={async () => {
+            const guardPromises = plantFetch.map(async (plant: Plant) => {
+              await getUsersGuardingPlant((authContext.userID)).then((data) => {
+                data = data.data
+
+                if (data == undefined) {
+                  return
+                }
+                console.log(data);
+
+                plantFetch.forEach((element: any) => {
+                  if (element.id == plant.id) {
+                    if (element.guard == null) {
+                      
+                      guardPlant((plant.id));
+                      const fetchPlants = async () => {
+                        const plantIds = ids ? ids.split(',') : [];
+                        const promises = plantIds.map((id) => getPlantById(Number(id)));
+                        const results = await Promise.all(promises);
+                        const fetchedPlants = results.map((result) => result.data);
+                        setPlantFetch(fetchedPlants);
+                      };
+                      fetchPlants();
+                      console.log("La plante " + plant.id + " est désormais gardée.");
+                    } else {
+                      console.log("La plante " + plant.id + " est déjà gardée.");
+                    }
+                  }
+                });
+              })
             });
+
+            try {
+              await Promise.all(guardPromises);
+            } catch (error) {
+              console.error("Erreur lors de la garde des plantes :", error);
+            }
           }}
         >
           Garder ces plantes
         </button>
       </div>
-
-      {/* ... */}
     </>
   );
 };

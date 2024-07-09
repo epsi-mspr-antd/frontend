@@ -1,3 +1,4 @@
+import { Guard } from "../PlantGuardians/PlantGuardian.interface";
 import { User } from "../User/user.interface";
 
 interface Status {
@@ -30,6 +31,7 @@ export interface Plant {
   species: Species;
   address: Address;
   image: string | null;
+  guard: Guard[];
   user: User;
 }
 
