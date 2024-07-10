@@ -19,6 +19,7 @@ import { deletePlantTipByTipID } from "../../../utils/API/Tips/tips.service";
 import { fecthTipsByPlantId } from "../../../utils/API/Tips/fetchTips.customHook";
 import { AuthContext } from "../../../Contexte/AuthContext";
 import { usePlantById } from "../../../utils/API/Plants/fetchPlantById";
+import { url } from "../../../utils/API/url";
 
 export const TipsList = () => {
   const { plantId: plantIdParam } = useParams();
@@ -112,6 +113,13 @@ export const TipsList = () => {
                       )) || <strong className="colorTitle">Conseil : </strong>}
                       <span>{tip.description}</span>
                     </p>
+                    {tip.image && (
+                      <p>
+                        <div className="DetailsSectionImg">
+                          <img src={url + "/static/" + tip.image}></img>
+                        </div>
+                      </p>
+                    )}
                     <p className="text-right italic">
                       <span>
                         {new Date(tip.createdAt).toLocaleDateString("fr-FR")}

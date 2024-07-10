@@ -9,14 +9,22 @@ export const createTip = async (data: CreateTip) => {
     const accessToken = storedContext !== null ? storedContext.accessToken : '';
     const urlCreateTip = `${url}/tips`
 
+    const formData = new FormData();
+    formData.append("description", data.description);
+    formData.append("plantId", String(data.plantId));
+
+    // Ajout de l'image seulement si elle est présente
+    if (data.pic) {
+        formData.append("pic", data.pic);
+    }
+
     try {
         const response = await fetch(urlCreateTip, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${accessToken}`,
-                'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data)
+            body: formData
         });
 
         const result = await response.json();

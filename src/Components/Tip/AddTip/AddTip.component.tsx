@@ -18,6 +18,7 @@ export const AddTip = () => {
   const [tip, setTip] = useState<CreateTip>({
     description: "",
     plantId: plantId,
+    pic: null,
   });
 
   const handleBackClick = () => {
@@ -32,12 +33,23 @@ export const AddTip = () => {
     }));
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      setTip((prevTip) => ({
+        ...prevTip,
+        pic: files[0],
+      }));
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const newTipData: CreateTip = {
         description: tip.description,
         plantId: plantId,
+        pic: tip.pic,
       };
 
       // Utilisation de la fonction editPlant avec les données mises à jour
@@ -90,6 +102,10 @@ export const AddTip = () => {
                   onChange={handleChange}
                   className="mt-2.5 mb-4 rounded-2xl p-4 text-main-dark w-full box-border grow"
                 />
+              </div>
+              <div className="addSectionImg">
+                <label>Télécharger une image de votre plante : </label>
+                <input type="file" onChange={handleFileChange} />
               </div>
               <div className="flex justify-between w-full my-8">
                 <button

@@ -1,6 +1,7 @@
 export interface CreateTip {
   description: string;
   plantId: number;
+  pic: null | File;
 }
 
 export interface UpdateTip {
@@ -19,6 +20,7 @@ export interface Tip {
   description: string;
   createdAt: string;
   updatedAt: string;
+  image: null | File;
   user: User;
 }
 
