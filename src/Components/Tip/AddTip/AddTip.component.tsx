@@ -21,6 +21,10 @@ export const AddTip = () => {
     pic: null,
   });
 
+  const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(
+    null
+  );
+
   const handleBackClick = () => {
     navigate(`/tip/${plantId}/TipsList`);
   };
@@ -34,12 +38,17 @@ export const AddTip = () => {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files && files.length > 0) {
-      setTip((prevTip) => ({
-        ...prevTip,
-        pic: files[0],
-      }));
+    const file = e.target.files !== null ? e.target.files[0] : null;
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+        setTip((prevTip) => ({
+          ...prevTip,
+          pic: file,
+        }));
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -52,14 +61,11 @@ export const AddTip = () => {
         pic: tip.pic,
       };
 
-      // Utilisation de la fonction editPlant avec les données mises à jour
-      await createTip(newTipData); // Assurez-vous que plant.id est un nombre valide
+      await createTip(newTipData);
 
-      // Redirection vers une autre page après la mise à jour par exemple
-      navigate(`/Tip/${plantId}/TipsList`); // Redirige vers la page principale après la mise à jour
+      navigate(`/Tip/${plantId}/TipsList`);
     } catch (error) {
       console.error("Erreur lors de la création du conseil :", error);
-      // Gérer l'erreur ici, par exemple rediriger vers une page d'erreur
       navigate("/error");
     }
   };
@@ -89,7 +95,7 @@ export const AddTip = () => {
             <h3 className="text-2xl mb-2">Ajout d'un conseil</h3>
             <form
               onSubmit={handleSubmit}
-              className="editTip flex flex-col rounded-lg border h-full"
+              className="editTip flex flex-col rounded-lg border h-full overflow-y-auto"
             >
               <div className="text-left px-2 w-9/10 flex flex-col text-lg h-full">
                 <label htmlFor="description">Description : </label>
@@ -103,10 +109,22 @@ export const AddTip = () => {
                   className="mt-2.5 mb-4 rounded-2xl p-4 text-main-dark w-full box-border grow"
                 />
               </div>
-              <div className="addSectionImg">
+
+              <div className="text-left px-2 w-9/10 flex flex-col text-lg h-full">
                 <label>Télécharger une image de votre plante : </label>
                 <input type="file" onChange={handleFileChange} />
+                {imagePreview && (
+                  <div className="text-left px-2 w-9/10 flex flex-col text-lg h-full">
+                    <label>Prévisualisation de votre image : </label>
+                    <img
+                      src={imagePreview.toString()}
+                      alt="Prévisualisation"
+                      style={{ maxWidth: "100%", maxHeight: "400px" }}
+                    />
+                  </div>
+                )}
               </div>
+
               <div className="flex justify-between w-full my-8">
                 <button
                   onClick={handleBackClick}

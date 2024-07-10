@@ -27,6 +27,10 @@ export const AddPlant = () => {
     pic: null,
   });
 
+  const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(
+    null
+  );
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -38,12 +42,17 @@ export const AddPlant = () => {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files && files.length > 0) {
-      setPlant((prevPlant) => ({
-        ...prevPlant,
-        pic: files[0],
-      }));
+    const file = e.target.files !== null ? e.target.files[0] : null;
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+        setPlant((prevPlant) => ({
+          ...prevPlant,
+          pic: file,
+        }));
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -58,10 +67,8 @@ export const AddPlant = () => {
         pic: plant.pic,
       };
 
-      // Utilisation de la fonction createPlant avec les données de la nouvelle plante
       await createPlant(newPlantData);
 
-      // Redirection vers une autre page après la création par exemple
       navigate("/account/plants");
     } catch (error) {
       console.error("Erreur lors de la création de la plante :", error);
@@ -96,7 +103,7 @@ export const AddPlant = () => {
   if (!statuses) {
     return (
       <div>
-        <span>Aucun état deplante n'a été trouvée</span>
+        <span>Aucun état de plante n'a été trouvé</span>
       </div>
     );
   }
@@ -185,6 +192,16 @@ export const AddPlant = () => {
                   <div className="addSectionImg">
                     <label>Télécharger une image de votre plante : </label>
                     <input type="file" onChange={handleFileChange} />
+                    {imagePreview && (
+                      <div className="text-left px-2 w-9/10 flex flex-col text-lg h-full mb-4">
+                        <label>Prévisualisation de votre image : </label>
+                        <img
+                          src={imagePreview.toString()}
+                          alt="Prévisualisation"
+                          style={{ maxWidth: "100%", maxHeight: "400px" }}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
                 <div className="flex justify-between w-full">
