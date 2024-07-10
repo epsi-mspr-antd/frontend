@@ -1,5 +1,6 @@
 import "./settingsProfile.style.css";
-import Picture from "./../../../../../../Ressources/Pictures/Demo/perso1.svg";
+import Picture1 from "./../../../../../../Ressources/Pictures/Demo/perso1.svg";
+import Picture2 from "./../../../../../../Ressources/Pictures/Demo/perso2.svg";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../../../../Contexte/AuthContext";
@@ -38,17 +39,26 @@ export const SettingsProfile = () => {
     );
   }
 
+  console.log(user.roles);
   return (
     <>
       <div className="h-screen flex flex-col gap-2 text-center text-sm m-4">
         <h4 className="text-2xl mb-2">Mon profil</h4>
         <div className="flex flex-col items-center justify-end mt-2 text-2xl p-2 gap-4 settingsBox">
-          <img
-            // className="imgProfil"
-            src={Picture}
-            alt="Profil picture"
-            className="max-w-64 rounded-full mt-4"
-          />
+          {(user.pseudo === "PetalProtector" && (
+            <img
+              src={Picture2}
+              alt="Profil picture"
+              className="max-w-64 rounded-full mt-4"
+            />
+          )) ||
+            (user.pseudo === "MegaModerator" && (
+              <img
+                src={Picture1}
+                alt="Profil picture"
+                className="max-w-64 rounded-full mt-4"
+              />
+            ))}
 
           <div className="flex flex-col gap-2 mb-4">
             <section className="flex gap-2">
