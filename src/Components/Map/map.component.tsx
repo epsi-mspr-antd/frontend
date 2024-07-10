@@ -4,12 +4,16 @@ import { MapCustom } from '../../Service/Leaflet/MapCustom.services';
 import L from 'leaflet';
 import logoMap from './../../../Ressources/SVG/logoMap.svg';
 import { FeatureCollection, Feature, Point } from 'geojson';
-import { getUserPlant } from '../../utils/API/Plants/APIPlants.service';
-import { Plant } from '../../Interface/Plants/PlantsList.interface';
+import { getAllPlant } from '../../utils/API/Plants/APIPlants.service';
+import { Plant, PlantResponse } from '../../Interface/Plants/PlantsList.interface';
+import { getFromLocalStorage } from '../../utils/localStorage/localStorage.service';
+import { AuthContext } from '../../Interface/User/user.interface';
 
 
 const Map = () => {
     const mapContainerRef = useRef(null);
+    const storedContext: AuthContext = getFromLocalStorage("authContext")
+    const userID = storedContext.userID;
 
     useEffect(() => {
         let mapInstance: MapCustom;
@@ -22,8 +26,9 @@ const Map = () => {
                 iconSize: [38, 95], // size of the icon
             });
 
-            getUserPlant().then((fetched: any) => {
-                fetched = fetched.data;
+            getAllPlant().then((plantsList: PlantResponse) => {
+                let fetched = plantsList.data.filter(plant => plant.user.id !== userID);
+                console.log(fetched)
                 if (fetched != undefined) {
                     const plantsByAddress = groupPlantsByAddress(fetched);
 
