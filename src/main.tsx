@@ -23,34 +23,39 @@ import { TipsList } from "./Components/Tip/TipsList/TipsList.component.tsx";
 import { EditTip } from "./Components/Tip/EditTip/EditTip.component.tsx";
 import { AddTip } from "./Components/Tip/AddTip/AddTip.component.tsx";
 import { EditSettingsProfile } from "./Components/Account/AccountMain_Settings/SettingsComponents/Profil/EditSettingsProfile/EditSettingsProfile.component.tsx";
+import { SpecificAddress } from './Components/Map/SpecificAddress/SpecificAddress.component.tsx';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <App />,
   },
   {
-    path: "/*",
+    path: '/*',
     element: <Error404 />,
   },
   {
-    path: "/CGU",
+    path: '/CGU',
     element: <CGU />,
   },
   {
-    path: "/login",
+    path: '/login',
     element: <Login />,
   },
   {
-    path: "/register",
+    path: '/register',
     element: <Register />,
   },
   {
-    path: "/map",
+    path: '/map',
     element: <MapPage />,
   },
   {
-    path: "/account",
+    path: '/specific/:ids',
+    element: <SpecificAddress />,
+  },
+  {
+    path: '/account',
     element: <ProtectedRoute />,
     children: [
       { path: "", element: <AccountHome /> },
@@ -66,26 +71,26 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/plants",
+    path: '/plants',
     element: <ProtectedRoute />,
     children: [
-      { path: "DetailsPlant/:id", element: <DetailsPlant /> },
-      { path: "AddPlant", element: <AddPlant /> },
-      { path: "EditPlant/:id", element: <EditPlant /> },
+      { path: 'DetailsPlant/:id', element: <DetailsPlant /> },
+      { path: 'AddPlant', element: <AddPlant /> },
+      { path: 'EditPlant/:id', element: <EditPlant /> },
     ],
   },
   {
-    path: "/Tip",
+    path: '/Tip',
     element: <ProtectedRoute />,
     children: [
-      { path: ":plantId/TipsList", element: <TipsList /> },
-      { path: ":plantId/EditTip/:tipId", element: <EditTip /> },
-      { path: ":plantId/AddTip", element: <AddTip /> },
+      { path: ':plantId/TipsList', element: <TipsList /> },
+      { path: ':plantId/EditTip/:tipId', element: <EditTip /> },
+      { path: ':plantId/AddTip', element: <AddTip /> },
     ],
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <AuthProvider>
       <RouterProvider router={router} />

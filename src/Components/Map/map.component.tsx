@@ -1,97 +1,120 @@
-import { MapContainer, TileLayer, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import L, { LeafletMouseEvent } from "leaflet";
-import logoMap from './../../../Ressources/SVG/logoMap.svg'
-import React from "react";
-import { Geolocation } from '@capacitor/geolocation';
-
-const currentPosition = async () => {
-    return await Geolocation.getCurrentPosition();
-}
-export const Map = () => {
-
-    // let data = undefined
-
-    // fetchData().then((fetchedData) => {
-    //     console.log(fetchedData);
-    //     if (fetchedData != undefined) {
-    //         data = fetchedData;
-
-    //         data.data.forEach((item: any) => {
-    //             const lat = item.address.latitude;
-    //             const lng = item.address.longitude;
-
-    //             console.log("dump")
-
-    //             const greenIcon = L.icon({
-    //                 iconUrl: logoMap,
-    //                 iconSize: [38, 95], // size of the icon
-    //             });
-    //             L.marker([lat, lng], { icon: greenIcon }).addTo(map);
-
-    //         });
-    //     }
-    // });
+import { useEffect, useRef } from "react";
+import { MapCustom } from '../../Service/Leaflet/MapCustom.services';
+import L from 'leaflet';
+import logoMap from './../../../Ressources/SVG/logoMap.svg';
+import { FeatureCollection, Feature, Point } from 'geojson';
+import { getAllPlant } from '../../utils/API/Plants/APIPlants.service';
+import { Plant, PlantResponse } from '../../Interface/Plants/PlantsList.interface';
+import { getFromLocalStorage } from '../../utils/localStorage/localStorage.service';
+import { AuthContext } from '../../Interface/User/user.interface';
 
 
+const Map = () => {
+    const mapContainerRef = useRef(null);
+    const storedContext: AuthContext = getFromLocalStorage("authContext")
+    const userID = storedContext.userID;
 
-    const handleClick = (e: L.LeafletMouseEvent, map: L.Map) => {
-        const { lat, lng } = e.latlng;
-        const greenIcon = L.icon({
-            iconUrl: logoMap,
-            iconSize: [38, 95], // size of the icon
-        });
-        L.marker([lat, lng], { icon: greenIcon }).addTo(map);
-    };
+    useEffect(() => {
+        let mapInstance: MapCustom;
+
+        if (mapContainerRef.current) {
+            mapInstance = new MapCustom();
+
+            const greenIcon = L.icon({
+                iconUrl: logoMap,
+                iconSize: [38, 95], // size of the icon
+            });
+
+            getAllPlant().then((plantsList: PlantResponse) => {
+                let fetched = plantsList.data.filter(plant => plant.user.id !== userID);
+                console.log(fetched)
+                if (fetched != undefined) {
+                    const plantsByAddress = groupPlantsByAddress(fetched);
+
+                    for (const address in plantsByAddress) {
+                        const plants = plantsByAddress[address];
+                        const latitude = plants[0].address.latitude;
+                        const longitude = plants[0].address.longitude
+                        const addressFull = `${plants[0].address.street}, ${plants[0].address.city}, ${plants[0].address.zip}`
+
+                        const geojsonData: FeatureCollection<Point, any> = {
+                            "type": "FeatureCollection",
+                            "features": [
+                                {
+                                    "type": "Feature",
+                                    "geometry": {
+                                        "type": "Point",
+                                        "coordinates": [longitude, latitude]
+                                    },
+                                    "properties": {
+                                        "address": addressFull,
+                                        "plants": Object.keys(plants).length,
+                                        "plantIds": plants.map((plant: Plant) => plant.id)
+                                    }
+                                }
+                            ]
+                        };
+
+                        function onEachAddress(feature: Feature<Point, any>, layer: L.Layer) {
+                            if (feature.properties) {
+                                const plantIds = feature.properties.plantIds.join(',');
+                                const popupContent = `
+                                <div>
+                                  <p><strong>Address:</strong> ${feature.properties.address}</p>
+                                  <p><strong>Plants:</strong> ${feature.properties.plants}</p>
+                                  <button><a href="/specific/${plantIds}">Access the plants</a></button>
+                                </div>
+                              `;
+                                (layer as L.Marker).bindPopup(popupContent);
+                            }
+                        }
+
+                        L.geoJSON(geojsonData, {
+                            onEachFeature: onEachAddress,
+                            pointToLayer: function (_feature, latlng) {
+                                return L.marker(latlng, { icon: greenIcon });
+                            }
+                        }).addTo(mapInstance.getMap());
+                    }
+                }
+            });
+
+            mapInstance.getCurrentPosition()
+                .then((data: any) => {
+                    mapInstance.getMap().setView([data.coords.latitude, data.coords.longitude], 19)
+                    L.marker([data.coords.latitude, data.coords.longitude]).addTo(mapInstance.getMap())
+                        .bindPopup('Je suis ici !')
+                        .openPopup();
+                })
+        }
+
+        return () => {
+            if (mapInstance) {
+                mapInstance.getMap().remove();
+            }
+        };
+    }, []);
 
     return (
-        <MapContainer center={[46.603354, 1.888334]} zoom={6} scrollWheelZoom={false}>
-            <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <MapClickHandler handleClick={handleClick} />
-        </MapContainer>
+        <div style={{ height: '100%', width: '100%' }}>
+            <div id="map" ref={mapContainerRef}></div>
+        </div>
     );
 };
 
-// Fonction pour récupérer les données de l'API
-// const fetchData = async () => {
-//     try {
-//         const res = await fetch('http://localhost:3000/plants', {
-//             method: 'GET',
-//             headers: {
-//                 'Content-Type': 'application/json',
-//                 'Authorization': `Bearer ${"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoidGVzdEB0ZXN0LmZyIiwicm9sZXMiOlsiT1dORVIiLCJCT1RBTklTVCIsIkdBUkRJQU4iXSwiaWF0IjoxNzE2NTQ1MjU0LCJleHAiOjE3MTY1NDYxNTR9.E_OtJ5AN5b97ZHZyyRmonZ46dHsQDxakpBBfKGtLWXY"}`
+function groupPlantsByAddress(plants: Plant[]) {
+    const plantsByAddress: any = {};
 
-//             },
-//         });
-//         if (!res.ok) {
-//             throw new Error('Network response was not ok');
-//         }
-//         return await res.json();
-//     } catch (error) {
-//         console.error('Error fetching data:', error);
-//         return null;
-//     }
-// };
-
-
-const MapClickHandler: React.FC<{ handleClick: (e: LeafletMouseEvent, map: L.Map) => void }> = ({ handleClick }) => {
-
-    const map = useMapEvents({
-        click(e: LeafletMouseEvent) {
-            handleClick(e, map);
-        },
+    plants.forEach((plant: Plant) => {
+        const address = `${plant.address.street}, ${plant.address.city}, ${plant.address.zip}`;
+        if (!plantsByAddress[address]) {
+            plantsByAddress[address] = [];
+        }
+        plantsByAddress[address].push(plant);
     });
 
-    currentPosition()
-        .then((data) => {
-            map.setView([data.coords.latitude, data.coords.longitude], 19)
-            L.marker([data.coords.latitude, data.coords.longitude]).addTo(map)
-                .bindPopup('Je suis ici ! <button class="bg-amber-400 p-2 rounded">TEST</button>')
-                .openPopup();
-        })
+    return plantsByAddress;
+}
 
-    return null;
-};
+export default Map;

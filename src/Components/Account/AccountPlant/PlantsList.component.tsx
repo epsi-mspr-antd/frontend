@@ -55,7 +55,7 @@ export const PlantLists = () => {
                 <div className="flex justify-center items-center">
                   <Link
                     to={`/plants/DetailsPlant/${plant.id}`}
-                    className="view-button mr-4"
+                    className="mr-4"
                   >
                     <FontAwesomeIcon size="2x" icon={faEye} />
                   </Link>
